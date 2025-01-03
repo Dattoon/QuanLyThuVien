@@ -7,7 +7,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-public class QuanlyDocGia extends JFrame {
+public class QuanlyDauSach extends JFrame {
 
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
@@ -22,7 +22,7 @@ public class QuanlyDocGia extends JFrame {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    QuanlyDocGia frame = new QuanlyDocGia();
+                    QuanlyDauSach frame = new QuanlyDauSach();
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -34,8 +34,8 @@ public class QuanlyDocGia extends JFrame {
     /**
      * Create the frame.
      */
-    public QuanlyDocGia() {
-        setTitle("Quản Lý Độc Giả");
+    public QuanlyDauSach() {
+        setTitle("Quản Lý Đầu Sách");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 800, 600);
         contentPane = new JPanel();
@@ -48,7 +48,7 @@ public class QuanlyDocGia extends JFrame {
         headerPanel.setLayout(new BorderLayout());
         headerPanel.setBackground(new Color(102, 153, 255));
         headerPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
-        JLabel lblTitle = new JLabel("Quản Lý Độc Giả");
+        JLabel lblTitle = new JLabel("Quản Lý Đầu Sách");
         lblTitle.setForeground(Color.WHITE);
         lblTitle.setFont(new Font("Arial", Font.BOLD, 24));
         lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
@@ -61,7 +61,7 @@ public class QuanlyDocGia extends JFrame {
 
         tableModel = new DefaultTableModel(
             new Object[][] {},
-            new String[] { "Mã Độc Giả", "Tên Độc Giả", "Địa Chỉ", "Ngày Sinh", "Điện Thoại", "Mã Thẻ", "Ngày Hết Hạn" }
+            new String[] { "Mã Sách", "Tựa Sách", "Tóm Tắt", "Số Lượng", "Mã Ngôn Ngữ", "Mã Vị Trí" }
         );
         table = new JTable(tableModel);
         table.setRowHeight(30);
