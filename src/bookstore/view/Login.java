@@ -1,4 +1,4 @@
-package bookstore.view.Account;
+package bookstore.view;
 
 import java.awt.*;
 import javax.swing.*;
