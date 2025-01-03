@@ -5,12 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class BaseRepository<T> {
-    private String jdbcURL = "jdbc:mysql://localhost:3306/QLTV";
-    private String jdbcUsername = "root";
-    private String jdbcPassword = "";
 
     protected Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(jdbcURL, jdbcUsername, jdbcPassword);
+        return DatabaseConnection.getConnection();
     }
 
     public void add(String query, Object... parameters) throws SQLException {
