@@ -4,15 +4,15 @@ import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
-import java.awt.event.ActionListener;
-import java.util.List;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class QuanlyDauSach extends JFrame {
 
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
     private JTable table;
-    private JTextField textFieldSearch;
+    private JTextField textFieldSearch, textFieldMaSach, textFieldTuaSach, textFieldTomTat, textFieldSoLuong, textFieldMaNgonNgu, textFieldMaViTri;
     private DefaultTableModel tableModel;
 
     /**
@@ -57,7 +57,6 @@ public class QuanlyDauSach extends JFrame {
 
         // Table panel
         JPanel tablePanel = new JPanel();
-        tablePanel.setLayout(new BorderLayout());
 
         tableModel = new DefaultTableModel(
             new Object[][] {},
@@ -67,10 +66,136 @@ public class QuanlyDauSach extends JFrame {
         table.setRowHeight(30);
         table.setFont(new Font("Arial", Font.PLAIN, 14));
         JScrollPane scrollPane = new JScrollPane(table);
-        tablePanel.add(scrollPane, BorderLayout.NORTH);
         contentPane.add(tablePanel, BorderLayout.CENTER);
+        
+                // Input Fields Panel (for "Mã Sách", "Tựa Sách", etc.)
+                JPanel inputFieldsPanel = new JPanel();
+                
+                        JLabel lblMaSach = new JLabel("Mã Sách:");
+                        lblMaSach.setFont(new Font("Arial", Font.PLAIN, 14));
+                        
+                                textFieldMaSach = new JTextField();
+                                textFieldMaSach.setFont(new Font("Arial", Font.PLAIN, 14));
+                                
+                                        JLabel lblTuaSach = new JLabel("Tựa Sách:");
+                                        lblTuaSach.setFont(new Font("Arial", Font.PLAIN, 14));
+                                        
+                                                textFieldTuaSach = new JTextField();
+                                                textFieldTuaSach.setFont(new Font("Arial", Font.PLAIN, 14));
+                                                
+                                                        JLabel lblTomTat = new JLabel("Tóm Tắt:");
+                                                        lblTomTat.setFont(new Font("Arial", Font.PLAIN, 14));
+                                                        
+                                                                textFieldTomTat = new JTextField();
+                                                                textFieldTomTat.setFont(new Font("Arial", Font.PLAIN, 14));
+                                                                
+                                                                        JLabel lblSoLuong = new JLabel("Số Lượng:");
+                                                                        lblSoLuong.setFont(new Font("Arial", Font.PLAIN, 14));
+                                                                        
+                                                                                textFieldSoLuong = new JTextField();
+                                                                                textFieldSoLuong.setFont(new Font("Arial", Font.PLAIN, 14));
+                                                                                
+                                                                                        JLabel lblMaNgonNgu = new JLabel("Mã Ngôn Ngữ:");
+                                                                                        lblMaNgonNgu.setFont(new Font("Arial", Font.PLAIN, 14));
+                                                                                        
+                                                                                                textFieldMaNgonNgu = new JTextField();
+                                                                                                textFieldMaNgonNgu.setFont(new Font("Arial", Font.PLAIN, 14));
+                                                                                                
+                                                                                                        JLabel lblMaViTri = new JLabel("Mã Vị Trí:");
+                                                                                                        lblMaViTri.setFont(new Font("Arial", Font.PLAIN, 14));
+                                                                                                        
+                                                                                                                textFieldMaViTri = new JTextField();
+                                                                                                                textFieldMaViTri.setFont(new Font("Arial", Font.PLAIN, 14));
+        GroupLayout gl_tablePanel = new GroupLayout(tablePanel);
+        gl_tablePanel.setHorizontalGroup(
+        	gl_tablePanel.createParallelGroup(Alignment.LEADING)
+        		.addGroup(gl_tablePanel.createSequentialGroup()
+        			.addGroup(gl_tablePanel.createParallelGroup(Alignment.LEADING)
+        				.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 776, GroupLayout.PREFERRED_SIZE)
+        				.addComponent(inputFieldsPanel, GroupLayout.PREFERRED_SIZE, 786, GroupLayout.PREFERRED_SIZE))
+        			.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        gl_tablePanel.setVerticalGroup(
+        	gl_tablePanel.createParallelGroup(Alignment.LEADING)
+        		.addGroup(gl_tablePanel.createSequentialGroup()
+        			.addComponent(inputFieldsPanel, GroupLayout.PREFERRED_SIZE, 138, GroupLayout.PREFERRED_SIZE)
+        			.addPreferredGap(ComponentPlacement.RELATED)
+        			.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 294, GroupLayout.PREFERRED_SIZE)
+        			.addContainerGap(34, Short.MAX_VALUE))
+        );
+        GroupLayout gl_inputFieldsPanel = new GroupLayout(inputFieldsPanel);
+        gl_inputFieldsPanel.setHorizontalGroup(
+        	gl_inputFieldsPanel.createParallelGroup(Alignment.LEADING)
+        		.addGroup(gl_inputFieldsPanel.createSequentialGroup()
+        			.addGap(45)
+        			.addGroup(gl_inputFieldsPanel.createParallelGroup(Alignment.TRAILING, false)
+        				.addComponent(lblMaSach, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        				.addComponent(lblMaNgonNgu, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        				.addComponent(lblTomTat, GroupLayout.PREFERRED_SIZE, 96, GroupLayout.PREFERRED_SIZE))
+        			.addGap(4)
+        			.addGroup(gl_inputFieldsPanel.createParallelGroup(Alignment.LEADING)
+        				.addGroup(gl_inputFieldsPanel.createSequentialGroup()
+        					.addComponent(textFieldMaNgonNgu, GroupLayout.PREFERRED_SIZE, 189, GroupLayout.PREFERRED_SIZE)
+        					.addPreferredGap(ComponentPlacement.RELATED, 396, GroupLayout.PREFERRED_SIZE))
+        				.addGroup(gl_inputFieldsPanel.createSequentialGroup()
+        					.addGroup(gl_inputFieldsPanel.createParallelGroup(Alignment.LEADING)
+        						.addGroup(gl_inputFieldsPanel.createSequentialGroup()
+        							.addComponent(textFieldTomTat, GroupLayout.PREFERRED_SIZE, 189, GroupLayout.PREFERRED_SIZE)
+        							.addGap(89)
+        							.addGroup(gl_inputFieldsPanel.createParallelGroup(Alignment.LEADING)
+        								.addGroup(gl_inputFieldsPanel.createSequentialGroup()
+        									.addGap(12)
+        									.addComponent(lblMaViTri, GroupLayout.PREFERRED_SIZE, 92, GroupLayout.PREFERRED_SIZE))
+        								.addGroup(gl_inputFieldsPanel.createSequentialGroup()
+        									.addGap(10)
+        									.addGroup(gl_inputFieldsPanel.createParallelGroup(Alignment.LEADING)
+        										.addComponent(lblTuaSach, GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE)
+        										.addComponent(lblSoLuong, GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE)))))
+        						.addGroup(gl_inputFieldsPanel.createSequentialGroup()
+        							.addComponent(textFieldMaSach, GroupLayout.PREFERRED_SIZE, 189, GroupLayout.PREFERRED_SIZE)
+        							.addGap(197)))
+        					.addPreferredGap(ComponentPlacement.RELATED)
+        					.addGroup(gl_inputFieldsPanel.createParallelGroup(Alignment.LEADING)
+        						.addComponent(textFieldMaViTri, GroupLayout.PREFERRED_SIZE, 189, GroupLayout.PREFERRED_SIZE)
+        						.addComponent(textFieldSoLuong, GroupLayout.PREFERRED_SIZE, 189, GroupLayout.PREFERRED_SIZE)
+        						.addComponent(textFieldTuaSach, GroupLayout.PREFERRED_SIZE, 189, GroupLayout.PREFERRED_SIZE))))
+        			.addGap(56))
+        );
+        gl_inputFieldsPanel.setVerticalGroup(
+        	gl_inputFieldsPanel.createParallelGroup(Alignment.LEADING)
+        		.addGroup(Alignment.TRAILING, gl_inputFieldsPanel.createSequentialGroup()
+        			.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        			.addGroup(gl_inputFieldsPanel.createParallelGroup(Alignment.LEADING)
+        				.addGroup(gl_inputFieldsPanel.createParallelGroup(Alignment.BASELINE)
+        					.addComponent(textFieldTuaSach, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        					.addComponent(lblTuaSach, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE))
+        				.addGroup(gl_inputFieldsPanel.createParallelGroup(Alignment.BASELINE)
+        					.addComponent(lblMaSach, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+        					.addComponent(textFieldMaSach, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+        			.addGap(10)
+        			.addGroup(gl_inputFieldsPanel.createParallelGroup(Alignment.LEADING)
+        				.addGroup(gl_inputFieldsPanel.createSequentialGroup()
+        					.addGroup(gl_inputFieldsPanel.createParallelGroup(Alignment.LEADING)
+        						.addGroup(gl_inputFieldsPanel.createSequentialGroup()
+        							.addGroup(gl_inputFieldsPanel.createParallelGroup(Alignment.BASELINE)
+        								.addComponent(lblSoLuong, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+        								.addComponent(textFieldSoLuong, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+        							.addGap(10)
+        							.addGroup(gl_inputFieldsPanel.createParallelGroup(Alignment.BASELINE)
+        								.addComponent(lblMaViTri, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+        								.addComponent(textFieldMaViTri, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+        						.addComponent(lblTomTat, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE))
+        					.addPreferredGap(ComponentPlacement.RELATED)
+        					.addGroup(gl_inputFieldsPanel.createParallelGroup(Alignment.BASELINE)
+        						.addComponent(lblMaNgonNgu, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+        						.addComponent(textFieldMaNgonNgu, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+        				.addComponent(textFieldTomTat, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE))
+        			.addContainerGap())
+        );
+        inputFieldsPanel.setLayout(gl_inputFieldsPanel);
+        tablePanel.setLayout(gl_tablePanel);
 
-        // Footer panel (actions and search)
+        // Footer panel (actions and buttons)
         JPanel footerPanel = new JPanel();
         footerPanel.setLayout(new BorderLayout());
         footerPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
@@ -119,64 +244,5 @@ public class QuanlyDauSach extends JFrame {
         footerPanel.add(searchPanel, BorderLayout.EAST);
 
         contentPane.add(footerPanel, BorderLayout.SOUTH);
-
-        // Add action listeners for buttons
-        btnAdd.addActionListener(e -> addRow());
-        btnEdit.addActionListener(e -> editRow());
-        btnDelete.addActionListener(e -> deleteRow());
-        btnSearch.addActionListener(e -> searchRows(textFieldSearch.getText()));
-    }
-
-    /**
-     * Method to add a row (to be implemented)
-     */
-    private void addRow() {
-        JOptionPane.showMessageDialog(this, "Chức năng Thêm chưa được triển khai.");
-    }
-
-    /**
-     * Method to edit a selected row (to be implemented)
-     */
-    private void editRow() {
-        int selectedRow = table.getSelectedRow();
-        if (selectedRow == -1) {
-            JOptionPane.showMessageDialog(this, "Vui lòng chọn dòng cần sửa.");
-            return;
-        }
-        JOptionPane.showMessageDialog(this, "Chức năng Sửa chưa được triển khai.");
-    }
-
-    /**
-     * Method to delete a selected row
-     */
-    private void deleteRow() {
-        int selectedRow = table.getSelectedRow();
-        if (selectedRow == -1) {
-            JOptionPane.showMessageDialog(this, "Vui lòng chọn dòng cần xóa.");
-            return;
-        }
-        tableModel.removeRow(selectedRow);
-        JOptionPane.showMessageDialog(this, "Xóa thành công.");
-    }
-
-    /**
-     * Method to search rows based on input
-     */
-    private void searchRows(String keyword) {
-        if (keyword.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Vui lòng nhập từ khóa tìm kiếm.");
-            return;
-        }
-        JOptionPane.showMessageDialog(this, "Chức năng Tìm kiếm chưa được triển khai.");
-    }
-
-    /**
-     * Method to populate table with data (to be connected with database)
-     */
-    public void loadData(List<Object[]> data) {
-        tableModel.setRowCount(0);
-        for (Object[] row : data) {
-            tableModel.addRow(row);
-        }
     }
 }
