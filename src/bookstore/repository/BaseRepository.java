@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class BaseRepository<T> {
-    private String jdbcURL = "jdbc:mysql://localhost:3306/QLBANSACH";
+    private String jdbcURL = "jdbc:mysql://localhost:3306/QLTV";
     private String jdbcUsername = "root";
-    private String jdbcPassword = "password";
+    private String jdbcPassword = "";
 
     protected Connection getConnection() throws SQLException {
         return DriverManager.getConnection(jdbcURL, jdbcUsername, jdbcPassword);
