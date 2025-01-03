@@ -1,13 +1,12 @@
-package bookstore.view;
+package bookstore.view.Account;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-public class loginview extends JFrame {
+public class login extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -19,7 +18,7 @@ public class loginview extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					loginview frame = new loginview();
+					login frame = new login();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -31,7 +30,7 @@ public class loginview extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public loginview() {
+	public login() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
