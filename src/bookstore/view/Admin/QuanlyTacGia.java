@@ -182,7 +182,7 @@ public class QuanlyTacGia extends JFrame {
 
     // Populate JTable with data from the database
     private void populateTacGiaTable() {
-        tacGiaController.populateTacGiaTable(tableTacGia);
+//        tacGiaController.populateTacGiaTable(tableTacGia);
     }
 
     // Method to add a row (to be implemented)
@@ -198,18 +198,18 @@ public class QuanlyTacGia extends JFrame {
             return;
         }
 
-        // Gọi phương thức addTacGia từ controller để thêm tác giả vào cơ sở dữ liệu
-        boolean isAdded = tacGiaController.addTacGia(maTG, tenTG, diaChiTG);
-
-        if (isAdded) {
-            // Nếu thêm thành công, hiển thị thông báo và cập nhật bảng
-            JOptionPane.showMessageDialog(this, "Thêm tác giả thành công.");
-            // Cập nhật lại bảng
-            populateTacGiaTable();
-        } else {
-            // Nếu có lỗi trong quá trình thêm
-            JOptionPane.showMessageDialog(this, "Có lỗi trong quá trình thêm tác giả.");
-        }
+//        // Gọi phương thức addTacGia từ controller để thêm tác giả vào cơ sở dữ liệu
+////        boolean isAdded = tacGiaController.addTacGia(maTG, tenTG, diaChiTG);
+//
+////        if (isAdded) {
+//            // Nếu thêm thành công, hiển thị thông báo và cập nhật bảng
+//            JOptionPane.showMessageDialog(this, "Thêm tác giả thành công.");
+//            // Cập nhật lại bảng
+//            populateTacGiaTable();
+//        } else {
+//            // Nếu có lỗi trong quá trình thêm
+//            JOptionPane.showMessageDialog(this, "Có lỗi trong quá trình thêm tác giả.");
+//        }
     }
 
 
