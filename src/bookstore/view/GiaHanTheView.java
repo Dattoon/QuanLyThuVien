@@ -65,13 +65,13 @@ public class GiaHanTheView extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String maThe = txtMaThe.getText();
                 // Giả sử chúng ta đã có phương thức để lấy thông tin độc giả từ mã thẻ
-                String maDG = getMaDGFromMaThe(maThe);
-                String tenDG = getTenDGFromMaThe(maThe);
-                String dienThoai = getDienThoaiFromMaThe(maThe);
+//                String maDG = getMaDGFromMaThe(maThe);
+//                String tenDG = getTenDGFromMaThe(maThe);
+//                String dienThoai = getDienThoaiFromMaThe(maThe);
 
-                lblMaDGInfo.setText("Mã Độc Giả: " + maDG);
-                lblTenDGInfo.setText("Tên Độc Giả: " + tenDG);
-                lblDienThoaiInfo.setText("Số Điện Thoại: " + dienThoai);
+//                lblMaDGInfo.setText("Mã Độc Giả: " + maDG);
+//                lblTenDGInfo.setText("Tên Độc Giả: " + tenDG);
+//                lblDienThoaiInfo.setText("Số Điện Thoại: " + dienThoai);
             }
         });
         
