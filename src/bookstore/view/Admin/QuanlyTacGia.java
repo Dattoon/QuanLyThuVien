@@ -159,19 +159,20 @@ public class QuanlyTacGia extends JFrame {
 
         GroupLayout gl_tablePanel = new GroupLayout(tablePanel);
         gl_tablePanel.setHorizontalGroup(
-            gl_tablePanel.createParallelGroup(Alignment.LEADING)
-                .addGroup(gl_tablePanel.createSequentialGroup()
-                    .addComponent(footerPanel, GroupLayout.PREFERRED_SIZE, 814, GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(20, Short.MAX_VALUE))
-                .addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 834, Short.MAX_VALUE)
+        	gl_tablePanel.createParallelGroup(Alignment.LEADING)
+        		.addGroup(gl_tablePanel.createSequentialGroup()
+        			.addComponent(footerPanel, GroupLayout.PREFERRED_SIZE, 814, GroupLayout.PREFERRED_SIZE)
+        			.addContainerGap(20, Short.MAX_VALUE))
+        		.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 834, Short.MAX_VALUE)
         );
         gl_tablePanel.setVerticalGroup(
-            gl_tablePanel.createParallelGroup(Alignment.LEADING)
-                .addGroup(gl_tablePanel.createSequentialGroup()
-                    .addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 280, GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(ComponentPlacement.RELATED)
-                    .addComponent(footerPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(71, Short.MAX_VALUE))
+        	gl_tablePanel.createParallelGroup(Alignment.LEADING)
+        		.addGroup(gl_tablePanel.createSequentialGroup()
+        			.addGap(38)
+        			.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 242, GroupLayout.PREFERRED_SIZE)
+        			.addPreferredGap(ComponentPlacement.RELATED)
+        			.addComponent(footerPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        			.addContainerGap(71, Short.MAX_VALUE))
         );
         tablePanel.setLayout(gl_tablePanel);
 
@@ -186,8 +187,31 @@ public class QuanlyTacGia extends JFrame {
 
     // Method to add a row (to be implemented)
     private void addRow() {
-        JOptionPane.showMessageDialog(this, "Chức năng Thêm chưa được triển khai.");
+        // Lấy dữ liệu từ các trường nhập liệu
+        String maTG = txtMaTG.getText().trim();
+        String tenTG = txtTenTG.getText().trim();
+        String diaChiTG = txtDiaChiTG.getText().trim();
+
+        // Kiểm tra dữ liệu đầu vào
+        if (maTG.isEmpty() || tenTG.isEmpty() || diaChiTG.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng điền đầy đủ thông tin tác giả.");
+            return;
+        }
+
+        // Gọi phương thức addTacGia từ controller để thêm tác giả vào cơ sở dữ liệu
+        boolean isAdded = tacGiaController.addTacGia(maTG, tenTG, diaChiTG);
+
+        if (isAdded) {
+            // Nếu thêm thành công, hiển thị thông báo và cập nhật bảng
+            JOptionPane.showMessageDialog(this, "Thêm tác giả thành công.");
+            // Cập nhật lại bảng
+            populateTacGiaTable();
+        } else {
+            // Nếu có lỗi trong quá trình thêm
+            JOptionPane.showMessageDialog(this, "Có lỗi trong quá trình thêm tác giả.");
+        }
     }
+
 
     // Method to edit a selected row (to be implemented)
     private void editRow() {
