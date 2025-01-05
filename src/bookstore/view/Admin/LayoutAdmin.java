@@ -4,6 +4,7 @@ import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import bookstore.controller.LayoutAdminController;
+import bookstore.share.MenuBarAdmin; // Import lớp MenuBarAdmin
 
 public class LayoutAdmin extends JFrame {
 
@@ -15,6 +16,7 @@ public class LayoutAdmin extends JFrame {
     public LayoutAdmin() {
         layoutAdminController = new LayoutAdminController();
 
+        // Thiết lập JFrame
         setTitle("Layout Admin");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 626, 500); 
@@ -23,6 +25,11 @@ public class LayoutAdmin extends JFrame {
         setContentPane(contentPane);
         contentPane.setLayout(new GridBagLayout());
 
+        // Tích hợp MenuBarAdmin
+        MenuBarAdmin menuBarAdmin = new MenuBarAdmin();
+        setJMenuBar(menuBarAdmin);
+
+        // Header
         JLabel lblManage = new JLabel("CHÀO MỪNG ĐẾN VỚI TRANG QUẢN LÝ");
         lblManage.setFont(new Font("Arial", Font.PLAIN, 24)); 
         lblManage.setForeground(Color.BLACK); 
@@ -33,6 +40,7 @@ public class LayoutAdmin extends JFrame {
         gbc_lblManage.insets = new Insets(10, 0, 20, 0);
         contentPane.add(lblManage, gbc_lblManage);
 
+        // Tìm kiếm
         JLabel lblSearch = new JLabel("TÊN TÌM KIẾM");
         lblSearch.setFont(new Font("Arial", Font.PLAIN, 14));
         GridBagConstraints gbc_lblSearch = new GridBagConstraints();
@@ -50,6 +58,7 @@ public class LayoutAdmin extends JFrame {
         gbc_searchField.fill = GridBagConstraints.HORIZONTAL;
         contentPane.add(searchField, gbc_searchField);
 
+        // Số liệu quản lý
         JLabel lblBooksBorrowed = new JLabel("SỐ LƯỢNG SÁCH ĐANG MƯỢN: " + layoutAdminController.getCountBooksBorrowed());
         lblBooksBorrowed.setFont(new Font("Arial", Font.PLAIN, 14));
         GridBagConstraints gbc_lblBooksBorrowed = new GridBagConstraints();
@@ -80,6 +89,7 @@ public class LayoutAdmin extends JFrame {
         gbc_lblRegisteredReaders.anchor = GridBagConstraints.WEST; 
         contentPane.add(lblRegisteredReaders, gbc_lblRegisteredReaders);
 
+        // Panel cho các nút hành động
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridBagLayout());
 
@@ -126,14 +136,12 @@ public class LayoutAdmin extends JFrame {
     }
 
     public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    LayoutAdmin frame = new LayoutAdmin();
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        EventQueue.invokeLater(() -> {
+            try {
+                LayoutAdmin frame = new LayoutAdmin();
+                frame.setVisible(true);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
     }
