@@ -1,45 +1,26 @@
 package bookstore.model;
 
-
 public class PhieuMuonModel {
-    private String maMuon;
-    private String maDG;
-    private String maSach;
+    private int maMuon;
     private String ngayMuon;
     private String ngayHetHan;
+    private int maDK;
 
     // Constructor
-    public PhieuMuonModel(String maMuon, String maDG, String maSach, String ngayMuon, String ngayHetHan) {
+    public PhieuMuonModel(int maMuon, String ngayMuon, String ngayHetHan, int maDK) {
         this.maMuon = maMuon;
-        this.maDG = maDG;
-        this.maSach = maSach;
         this.ngayMuon = ngayMuon;
         this.ngayHetHan = ngayHetHan;
+        this.maDK = maDK;
     }
 
     // Getters and setters
-    public String getMaMuon() {
+    public int getMaMuon() {
         return maMuon;
     }
 
-    public void setMaMuon(String maMuon) {
+    public void setMaMuon(int maMuon) {
         this.maMuon = maMuon;
-    }
-
-    public String getMaDG() {
-        return maDG;
-    }
-
-    public void setMaDG(String maDG) {
-        this.maDG = maDG;
-    }
-
-    public String getMaSach() {
-        return maSach;
-    }
-
-    public void setMaSach(String maSach) {
-        this.maSach = maSach;
     }
 
     public String getNgayMuon() {
@@ -56,5 +37,13 @@ public class PhieuMuonModel {
 
     public void setNgayHetHan(String ngayHetHan) {
         this.ngayHetHan = ngayHetHan;
+    }
+
+    public int getMaDK() {
+        return maDK;
+    }
+
+    public void setMaDK(int maDK) {
+        this.maDK = maDK;
     }
 }

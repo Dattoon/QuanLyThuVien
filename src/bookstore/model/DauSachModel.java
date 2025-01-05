@@ -1,26 +1,29 @@
 package bookstore.model;
 
-
 public class DauSachModel {
-    private String maSach;
+    private int maSach;
     private String tuaSach;
-    private String tacGia;
     private String tomTat;
+    private int sl;
+    private int maNN;
+    private int maVT;
 
     // Constructor
-    public DauSachModel(String maSach, String tuaSach, String tacGia, String tomTat) {
+    public DauSachModel(int maSach, String tuaSach, String tomTat, int sl, int maNN, int maVT) {
         this.maSach = maSach;
         this.tuaSach = tuaSach;
-        this.tacGia = tacGia;
         this.tomTat = tomTat;
+        this.sl = sl;
+        this.maNN = maNN;
+        this.maVT = maVT;
     }
 
     // Getters and setters
-    public String getMaSach() {
+    public int getMaSach() {
         return maSach;
     }
 
-    public void setMaSach(String maSach) {
+    public void setMaSach(int maSach) {
         this.maSach = maSach;
     }
 
@@ -32,19 +35,35 @@ public class DauSachModel {
         this.tuaSach = tuaSach;
     }
 
-    public String getTacGia() {
-        return tacGia;
-    }
-
-    public void setTacGia(String tacGia) {
-        this.tacGia = tacGia;
-    }
-
     public String getTomTat() {
         return tomTat;
     }
 
     public void setTomTat(String tomTat) {
         this.tomTat = tomTat;
+    }
+
+    public int getSl() {
+        return sl;
+    }
+
+    public void setSl(int sl) {
+        this.sl = sl;
+    }
+
+    public int getMaNN() {
+        return maNN;
+    }
+
+    public void setMaNN(int maNN) {
+        this.maNN = maNN;
+    }
+
+    public int getMaVT() {
+        return maVT;
+    }
+
+    public void setMaVT(int maVT) {
+        this.maVT = maVT;
     }
 }
