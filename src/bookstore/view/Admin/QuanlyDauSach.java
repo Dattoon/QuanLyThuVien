@@ -58,11 +58,6 @@ public class QuanlyDauSach extends JFrame {
         // Table panel
         JPanel tablePanel = new JPanel();
 
-        tableModel = new DefaultTableModel(
-            new Object[][] {},
-            new String[] { "Mã Sách", "Tựa Sách", "Tóm Tắt", "Số Lượng", "Mã Ngôn Ngữ", "Mã Vị Trí" }
-        );
-        table = new JTable(tableModel);
         table.setRowHeight(30);
         table.setFont(new Font("Arial", Font.PLAIN, 14));
         JScrollPane scrollPane = new JScrollPane(table);
