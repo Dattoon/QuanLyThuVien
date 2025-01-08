@@ -56,6 +56,19 @@ public abstract class BaseRepository<T> {
 		return object;
 	}
 
+	protected List<T> search(String query, RowMapper<T> rowMapper, Object... parameters) throws SQLException {
+		try (Connection connection = getConnection();
+				PreparedStatement statement = connection.prepareStatement(query)) {
+			setParameters(statement, parameters);
+			ResultSet resultSet = statement.executeQuery();
+			List<T> results = new ArrayList<>();
+			while (resultSet.next()) {
+				results.add(rowMapper.mapRow(resultSet));
+			}
+			return results;
+		}
+	}
+
 	private void setParameters(PreparedStatement preparedStatement, Object... parameters) throws SQLException {
 		for (int i = 0; i < parameters.length; i++) {
 			preparedStatement.setObject(i + 1, parameters[i]);
@@ -66,5 +79,4 @@ public abstract class BaseRepository<T> {
 		T mapRow(ResultSet resultSet) throws SQLException;
 	}
 
-	
 }

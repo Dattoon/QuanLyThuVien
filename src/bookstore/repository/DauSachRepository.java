@@ -12,8 +12,24 @@ public class DauSachRepository extends BaseRepository<DauSachModel> {
     private static final String SELECT_QUERY = "SELECT * FROM DauSach WHERE MaSach = ?";
     private static final String SELECT_ALL_QUERY = "SELECT * FROM DauSach";
 
-    public void addDauSach(DauSachModel dauSach) throws SQLException {
-        add(INSERT_QUERY, dauSach.getTuaSach(), dauSach.getTomTat(), dauSach.getSl(), dauSach.getMaNN(), dauSach.getMaVT());
+    public int addDauSach(DauSachModel dauSach) throws SQLException {
+        int maSach = 0;
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(INSERT_QUERY, Statement.RETURN_GENERATED_KEYS)) {
+            statement.setString(1, dauSach.getTuaSach());
+            statement.setString(2, dauSach.getTomTat());
+            statement.setInt(3, dauSach.getSl());
+            statement.setInt(4, dauSach.getMaNN());
+            statement.setInt(5, dauSach.getMaVT());
+            statement.executeUpdate();
+
+            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    maSach = generatedKeys.getInt(1);
+                }
+            }
+        }
+        return maSach;
     }
 
     public void updateDauSach(DauSachModel dauSach) throws SQLException {
@@ -55,4 +71,5 @@ public class DauSachRepository extends BaseRepository<DauSachModel> {
             }
         });
     }
+    
 }

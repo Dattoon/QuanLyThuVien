@@ -4,6 +4,7 @@ import bookstore.model.ViTriModel;
 import java.sql.*;
 import java.util.List;
 
+
 public class ViTriRepository extends BaseRepository<ViTriModel> {
 
     private static final String INSERT_QUERY = "INSERT INTO ViTri (Khu, Ke, Ngan) VALUES (?, ?, ?)";
