@@ -1,26 +1,32 @@
 package bookstore.model;
 
+import java.sql.Date;
 
 public class DocGiaModel {
-    private String maDG;
+    private int maDG;
     private String tenDG;
+    private Date ngaySinh;
+    private String diaChiDG;
     private String dienThoai;
-    private String ngayHetHan;
+    private String maThe;
+    private Date ngayHetHan;
 
-    // Constructor
-    public DocGiaModel(String maDG, String tenDG, String dienThoai, String ngayHetHan) {
+    public DocGiaModel(int maDG, String tenDG, Date ngaySinh, String diaChiDG, String dienThoai, String maThe, Date ngayHetHan) {
         this.maDG = maDG;
         this.tenDG = tenDG;
+        this.ngaySinh = ngaySinh;
+        this.diaChiDG = diaChiDG;
         this.dienThoai = dienThoai;
+        this.maThe = maThe;
         this.ngayHetHan = ngayHetHan;
     }
 
     // Getters and setters
-    public String getMaDG() {
+    public int getMaDG() {
         return maDG;
     }
 
-    public void setMaDG(String maDG) {
+    public void setMaDG(int maDG) {
         this.maDG = maDG;
     }
 
@@ -32,6 +38,22 @@ public class DocGiaModel {
         this.tenDG = tenDG;
     }
 
+    public Date getNgaySinh() {
+        return ngaySinh;
+    }
+
+    public void setNgaySinh(Date ngaySinh) {
+        this.ngaySinh = ngaySinh;
+    }
+
+    public String getDiaChiDG() {
+        return diaChiDG;
+    }
+
+    public void setDiaChiDG(String diaChiDG) {
+        this.diaChiDG = diaChiDG;
+    }
+
     public String getDienThoai() {
         return dienThoai;
     }
@@ -40,11 +62,19 @@ public class DocGiaModel {
         this.dienThoai = dienThoai;
     }
 
-    public String getNgayHetHan() {
+    public String getMaThe() {
+        return maThe;
+    }
+
+    public void setMaThe(String maThe) {
+        this.maThe = maThe;
+    }
+
+    public Date getNgayHetHan() {
         return ngayHetHan;
     }
 
-    public void setNgayHetHan(String ngayHetHan) {
+    public void setNgayHetHan(Date ngayHetHan) {
         this.ngayHetHan = ngayHetHan;
     }
 }

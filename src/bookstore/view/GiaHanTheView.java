@@ -1,25 +1,27 @@
 package bookstore.view;
 
 import java.awt.*;
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Date;
+import java.sql.SQLException;
+
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.text.MaskFormatter;
+import java.text.ParseException;
+import bookstore.controller.DocGiaController;
+import bookstore.model.DocGiaModel;
 
 public class GiaHanTheView extends JFrame {
 
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
     private JTextField txtMaThe;
-    private JTextField txtNgayHetHanHienTai;
-    private JTextField txtNgayGiaHanMoi;
-    private JLabel lblMaDGInfo;
-    private JLabel lblTenDGInfo;
-    private JLabel lblDienThoaiInfo;
+    private JTextField txtTenDocGia;
+    private JFormattedTextField txtNgayHetHan;
+    private DocGiaController docGiaController;
 
-    /**
-     * Launch the application.
-     */
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -33,138 +35,110 @@ public class GiaHanTheView extends JFrame {
         });
     }
 
-    /**
-     * Create the frame.
-     */
     public GiaHanTheView() {
+        docGiaController = new DocGiaController();
+
         setTitle("Gia Hạn Thẻ");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 1103, 676);
+        setBounds(100, 100, 500, 300);
+
         contentPane = new JPanel();
-        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+        contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
+        contentPane.setLayout(new BorderLayout(10, 10));
         setContentPane(contentPane);
-        contentPane.setLayout(new GridBagLayout());
 
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 10, 10);
-        gbc.fill = GridBagConstraints.HORIZONTAL;
+        // Tiêu đề "Gia hạn thẻ"
+        JLabel lblTitle = new JLabel("Gia Hạn Thẻ", JLabel.CENTER);
+        lblTitle.setFont(new Font("Arial", Font.BOLD, 20));
+        contentPane.add(lblTitle, BorderLayout.NORTH);
 
-        JLabel lblHeader = new JLabel("Gia Hạn Thẻ");
-        lblHeader.setFont(new Font("Arial", Font.BOLD, 24));
-        lblHeader.setHorizontalAlignment(SwingConstants.CENTER);
-        lblHeader.setForeground(new Color(54, 54, 54));
-        gbc.gridx = 1;
-        gbc.gridy = 0;
-        gbc.gridwidth = 2;
-        contentPane.add(lblHeader, gbc);
+        // Panel chứa các trường nhập liệu
+        JPanel formPanel = new JPanel();
+        formPanel.setLayout(new GridLayout(4, 2, 10, 10));
+        contentPane.add(formPanel, BorderLayout.CENTER);
 
+        // Mã thẻ
+        JLabel lblMaThe = new JLabel("Mã Thẻ:");
+        formPanel.add(lblMaThe);
         txtMaThe = new JTextField();
-        txtMaThe.setFont(new Font("Arial", Font.PLAIN, 16));
         txtMaThe.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String maThe = txtMaThe.getText();
-                // Giả sử chúng ta đã có phương thức để lấy thông tin độc giả từ mã thẻ
-//                String maDG = getMaDGFromMaThe(maThe);
-//                String tenDG = getTenDGFromMaThe(maThe);
-//                String dienThoai = getDienThoaiFromMaThe(maThe);
-
-//                lblMaDGInfo.setText("Mã Độc Giả: " + maDG);
-//                lblTenDGInfo.setText("Tên Độc Giả: " + tenDG);
-//                lblDienThoaiInfo.setText("Số Điện Thoại: " + dienThoai);
+                loadDocGiaInfo();
             }
         });
-        
-                // Các trường nhập liệu
-                GridBagConstraints gbcMaThe = new GridBagConstraints();
-                gbcMaThe.insets = new Insets(10, 10, 10, 10);
-                gbcMaThe.fill = GridBagConstraints.HORIZONTAL;
-                gbcMaThe.gridx = 0;
-                gbcMaThe.gridy = 1;
-                JLabel label = new JLabel("Mã Thẻ:");
-                contentPane.add(label, gbcMaThe);
-        GridBagConstraints gbcTxtMaThe = new GridBagConstraints();
-        gbcTxtMaThe.insets = new Insets(10, 10, 10, 10);
-        gbcTxtMaThe.fill = GridBagConstraints.HORIZONTAL;
-        gbcTxtMaThe.gridx = 2;
-        gbcTxtMaThe.gridy = 1;
-        contentPane.add(txtMaThe, gbcTxtMaThe);
-        
-                GridBagConstraints gbcNgayHetHanHienTai = new GridBagConstraints();
-                gbcNgayHetHanHienTai.insets = new Insets(10, 10, 10, 10);
-                gbcNgayHetHanHienTai.fill = GridBagConstraints.HORIZONTAL;
-                gbcNgayHetHanHienTai.gridx = 0;
-                gbcNgayHetHanHienTai.gridy = 2;
-                JLabel label_1 = new JLabel("Ngày Hết Hạn Hiện Tại:");
-                contentPane.add(label_1, gbcNgayHetHanHienTai);
+        formPanel.add(txtMaThe);
 
-        txtNgayHetHanHienTai = new JTextField();
-        txtNgayHetHanHienTai.setFont(new Font("Arial", Font.PLAIN, 16));
-        GridBagConstraints gbcTxtNgayHetHanHienTai = new GridBagConstraints();
-        gbcTxtNgayHetHanHienTai.insets = new Insets(10, 10, 10, 10);
-        gbcTxtNgayHetHanHienTai.fill = GridBagConstraints.HORIZONTAL;
-        gbcTxtNgayHetHanHienTai.gridx = 2;
-        gbcTxtNgayHetHanHienTai.gridy = 2;
-        contentPane.add(txtNgayHetHanHienTai, gbcTxtNgayHetHanHienTai);
-        
-                GridBagConstraints gbcNgayGiaHanMoi = new GridBagConstraints();
-                gbcNgayGiaHanMoi.insets = new Insets(10, 10, 10, 10);
-                gbcNgayGiaHanMoi.fill = GridBagConstraints.HORIZONTAL;
-                gbcNgayGiaHanMoi.gridx = 0;
-                gbcNgayGiaHanMoi.gridy = 3;
-                JLabel label_2 = new JLabel("Ngày Gia Hạn Mới:");
-                contentPane.add(label_2, gbcNgayGiaHanMoi);
+        // Tên độc giả
+        JLabel lblTenDocGia = new JLabel("Tên Độc Giả:");
+        formPanel.add(lblTenDocGia);
+        txtTenDocGia = new JTextField();
+        txtTenDocGia.setEditable(false);
+        formPanel.add(txtTenDocGia);
 
-        txtNgayGiaHanMoi = new JTextField();
-        txtNgayGiaHanMoi.setFont(new Font("Arial", Font.PLAIN, 16));
-        GridBagConstraints gbcTxtNgayGiaHanMoi = new GridBagConstraints();
-        gbcTxtNgayGiaHanMoi.insets = new Insets(10, 10, 10, 10);
-        gbcTxtNgayGiaHanMoi.fill = GridBagConstraints.HORIZONTAL;
-        gbcTxtNgayGiaHanMoi.gridx = 2;
-        gbcTxtNgayGiaHanMoi.gridy = 3;
-        contentPane.add(txtNgayGiaHanMoi, gbcTxtNgayGiaHanMoi);
+        // Ngày hết hạn hiện tại
+        JLabel lblNgayHetHan = new JLabel("Ngày Hết Hạn Hiện Tại:");
+        formPanel.add(lblNgayHetHan);
+        try {
+            MaskFormatter dateMask = new MaskFormatter("####-##-##");
+            dateMask.setPlaceholderCharacter('_');
+            txtNgayHetHan = new JFormattedTextField(dateMask);
+            txtNgayHetHan.setEditable(false);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        formPanel.add(txtNgayHetHan);
 
-        // Panel hiển thị thông tin độc giả
-        JPanel panelDGInfo = new JPanel();
-        panelDGInfo.setLayout(new GridBagLayout());
-        GridBagConstraints gbc_panelDGInfo = new GridBagConstraints();
-        gbc_panelDGInfo.gridx = 3;
-        gbc_panelDGInfo.gridy = 1;
-        gbc_panelDGInfo.gridheight = 3;
-        gbc_panelDGInfo.insets = new Insets(0, 20, 0, 0);
-        contentPane.add(panelDGInfo, gbc_panelDGInfo);
+        // Nút Gia Hạn và Hủy
+        JButton btnGiaHan = new JButton("Gia Hạn");
+        btnGiaHan.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                extendCard();
+            }
+        });
+        formPanel.add(btnGiaHan);
 
-        JLabel lblThongTinDG = new JLabel("Thông Tin Độc Giả");
-        lblThongTinDG.setFont(new Font("Arial", Font.BOLD, 18));
-        lblThongTinDG.setHorizontalAlignment(SwingConstants.CENTER);
-        GridBagConstraints gbc_lblThongTinDG = new GridBagConstraints();
-        gbc_lblThongTinDG.gridx = 0;
-        gbc_lblThongTinDG.gridy = 0;
-        gbc_lblThongTinDG.gridwidth = 2;
-        panelDGInfo.add(lblThongTinDG, gbc_lblThongTinDG);
+        JButton btnHuy = new JButton("Hủy");
+        btnHuy.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose(); // Đóng form
+            }
+        });
+        formPanel.add(btnHuy);
+    }
 
-        lblMaDGInfo = new JLabel("Mã Độc Giả: ");
-        lblMaDGInfo.setFont(new Font("Arial", Font.PLAIN, 16));
-        GridBagConstraints gbc_lblMaDGInfo = new GridBagConstraints();
-        gbc_lblMaDGInfo.gridx = 0;
-        gbc_lblMaDGInfo.gridy = 1;
-        gbc_lblMaDGInfo.gridwidth = 2;
-        panelDGInfo.add(lblMaDGInfo, gbc_lblMaDGInfo);
+    private void loadDocGiaInfo() {
+        String maThe = txtMaThe.getText();
+        try {
+            DocGiaModel docGia = docGiaController.getDocGiaByMaThe(maThe);
+            if (docGia != null) {
+                txtTenDocGia.setText(docGia.getTenDG());
+                txtNgayHetHan.setText(docGia.getNgayHetHan().toString());
+            } else {
+                JOptionPane.showMessageDialog(this, "Không tìm thấy thẻ với mã thẻ: " + maThe, "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Có lỗi xảy ra trong quá trình tải thông tin.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
-        lblTenDGInfo = new JLabel("Tên Độc Giả: ");
-        lblTenDGInfo.setFont(new Font("Arial", Font.PLAIN, 16));
-        GridBagConstraints gbc_lblTenDGInfo = new GridBagConstraints();
-        gbc_lblTenDGInfo.gridx = 0;
-        gbc_lblTenDGInfo.gridy = 2;
-        gbc_lblTenDGInfo.gridwidth = 2;
-        panelDGInfo.add(lblTenDGInfo, gbc_lblTenDGInfo);
-
-        lblDienThoaiInfo = new JLabel("Số Điện Thoại: ");
-        lblDienThoaiInfo.setFont(new Font("Arial", Font.PLAIN, 16));
-        GridBagConstraints gbc_lblDienThoaiInfo = new GridBagConstraints();
-        gbc_lblDienThoaiInfo.gridx = 0;
-        gbc_lblDienThoaiInfo.gridy = 3;
-        gbc_lblDienThoaiInfo.gridwidth = 2;
-        panelDGInfo.add(lblDienThoaiInfo, gbc_lblDienThoaiInfo);
+    private void extendCard() {
+        String maThe = txtMaThe.getText();
+        try {
+            DocGiaModel docGia = docGiaController.getDocGiaByMaThe(maThe);
+            if (docGia != null) {
+                docGiaController.updateDocGia(docGia.getMaDG(), docGia.getTenDG(), docGia.getNgaySinh(), docGia.getDiaChiDG(), docGia.getDienThoai(), docGia.getMaThe());
+                JOptionPane.showMessageDialog(this, "Gia hạn thẻ thành công!");
+                txtNgayHetHan.setText(docGia.getNgayHetHan().toString());
+            } else {
+                JOptionPane.showMessageDialog(this, "Không tìm thấy thẻ với mã thẻ: " + maThe, "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Có lỗi xảy ra trong quá trình gia hạn.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
     }
 }
