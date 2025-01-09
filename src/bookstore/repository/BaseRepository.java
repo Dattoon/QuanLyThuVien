@@ -30,16 +30,18 @@ public abstract class BaseRepository<T> {
 		}
 	}
 
-	public List<T> getAll(String query, RowMapper<T> rowMapper) throws SQLException {
-		List<T> list = new ArrayList<>();
+	protected List<T> getAll(String query, RowMapper<T> mapper, Object... params) throws SQLException {
+		List<T> results = new ArrayList<>();
 		try (Connection connection = getConnection();
-				PreparedStatement preparedStatement = connection.prepareStatement(query);
-				ResultSet resultSet = preparedStatement.executeQuery()) {
-			while (resultSet.next()) {
-				list.add(rowMapper.mapRow(resultSet));
+				PreparedStatement statement = connection.prepareStatement(query)) {
+			setParameters(statement, params);
+			try (ResultSet resultSet = statement.executeQuery()) {
+				while (resultSet.next()) {
+					results.add(mapper.mapRow(resultSet));
+				}
 			}
 		}
-		return list;
+		return results;
 	}
 
 	public T getOne(String query, RowMapper<T> rowMapper, Object... parameters) throws SQLException {

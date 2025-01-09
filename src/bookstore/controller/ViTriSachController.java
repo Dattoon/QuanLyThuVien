@@ -63,12 +63,7 @@ public class ViTriSachController {
 
 	// Method to get all locations
 	public List<ViTriModel> getAllViTri() {
-		try {
-			return viTriRepository.getAllViTri();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return null;
-		}
+		return viTriRepository.getAllViTri();
 	}
 
 	// Method to populate JTable with locations data

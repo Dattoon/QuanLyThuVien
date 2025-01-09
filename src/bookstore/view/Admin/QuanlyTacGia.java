@@ -1,4 +1,5 @@
 package bookstore.view.Admin;
+
 import java.util.List;
 
 import java.awt.*;
@@ -67,6 +68,7 @@ public class QuanlyTacGia extends JFrame {
 
 		JLabel lblMaTG = new JLabel("Mã Tác Giả:");
 		txtMaTG = new JTextField();
+		txtMaTG.setEditable(false);
 
 		JLabel lblTenTG = new JLabel("Tên Tác Giả:");
 		txtTenTG = new JTextField();
@@ -192,26 +194,26 @@ public class QuanlyTacGia extends JFrame {
 
 	// Method to add a row
 	// Method to add a row
-private void addRow() {
-    // Lấy dữ liệu từ các trường nhập liệu
-    String tenTG = txtTenTG.getText().trim();
-    String diaChiTG = txtDiaChiTG.getText().trim();
+	private void addRow() {
+		// Lấy dữ liệu từ các trường nhập liệu
+		String tenTG = txtTenTG.getText().trim();
+		String diaChiTG = txtDiaChiTG.getText().trim();
 
-    // Kiểm tra dữ liệu đầu vào
-    if (tenTG.isEmpty() || diaChiTG.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Vui lòng điền đầy đủ thông tin tác giả.");
-        return;
-    }
+		// Kiểm tra dữ liệu đầu vào
+		if (tenTG.isEmpty() || diaChiTG.isEmpty()) {
+			JOptionPane.showMessageDialog(this, "Vui lòng điền đầy đủ thông tin tác giả.");
+			return;
+		}
 
-    boolean isAdded = tacGiaController.addTacGia(tenTG, diaChiTG);
-    if (isAdded) {
-        JOptionPane.showMessageDialog(this, "Thêm tác giả thành công.");
-        populateTacGiaTable();
-        clearTextFields();
-    } else {
-        JOptionPane.showMessageDialog(this, "Có lỗi trong quá trình thêm tác giả.");
-    }
-}
+		boolean isAdded = tacGiaController.addTacGia(tenTG, diaChiTG);
+		if (isAdded) {
+			JOptionPane.showMessageDialog(this, "Thêm tác giả thành công.");
+			populateTacGiaTable();
+			clearTextFields();
+		} else {
+			JOptionPane.showMessageDialog(this, "Có lỗi trong quá trình thêm tác giả.");
+		}
+	}
 
 	// Method to edit a selected row
 	private void editRow() {
@@ -286,23 +288,22 @@ private void addRow() {
 
 	// Method to search rows based on input
 	private void searchRows(String keyword) {
-	    if (keyword.isEmpty()) {
-	        JOptionPane.showMessageDialog(this, "Vui lòng nhập từ khóa tìm kiếm.");
-	        return;
-	    }
+		if (keyword.isEmpty()) {
+			JOptionPane.showMessageDialog(this, "Vui lòng nhập từ khóa tìm kiếm.");
+			return;
+		}
 
-	    List<TacGiaModel> tacGiaList = tacGiaController.searchTacGia(keyword);
-	    if (tacGiaList == null) {
-	        JOptionPane.showMessageDialog(this, "Không tìm thấy tác giả nào.");
-	        return;
-	    }
+		List<TacGiaModel> tacGiaList = tacGiaController.searchTacGia(keyword);
+		if (tacGiaList == null) {
+			JOptionPane.showMessageDialog(this, "Không tìm thấy tác giả nào.");
+			return;
+		}
 
-	    tableModel.setRowCount(0); // Clear existing rows
-	    for (TacGiaModel tg : tacGiaList) {
-	        tableModel.addRow(new Object[]{tg.getMaTG(), tg.getTenTG(), tg.getDiaChiTG()});
-	    }
+		tableModel.setRowCount(0); // Clear existing rows
+		for (TacGiaModel tg : tacGiaList) {
+			tableModel.addRow(new Object[] { tg.getMaTG(), tg.getTenTG(), tg.getDiaChiTG() });
+		}
 	}
-
 
 	// Back button functionality (close current window)
 	private void goBack() {

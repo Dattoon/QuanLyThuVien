@@ -71,5 +71,4 @@ public class DauSachRepository extends BaseRepository<DauSachModel> {
             }
         });
     }
-    
 }

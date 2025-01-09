@@ -63,12 +63,7 @@ public class NgonNguController {
 
 	// Method to get all languages
 	public List<NgonNguModel> getAllNgonNgu() {
-		try {
-			return ngonNguRepository.getAllNgonNgu();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return null;
-		}
+		return ngonNguRepository.getAllNgonNgu();
 	}
 
 	// Method to populate JTable with language data

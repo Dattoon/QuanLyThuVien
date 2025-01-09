@@ -1,107 +1,92 @@
 package bookstore.controller;
 
 import bookstore.model.DauSachModel;
-import bookstore.model.SachTacGiaModel;
 import bookstore.model.TacGiaModel;
 import bookstore.repository.DauSachRepository;
 import bookstore.repository.SachTacGiaRepository;
 import bookstore.repository.TacGiaRepository;
-
-import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import java.sql.SQLException;
 import java.util.List;
 
 public class DauSachController {
 
     private DauSachRepository dauSachRepository;
-    private SachTacGiaRepository sachTacGiaRepository;
+    private SachTacGiaRepository dauSachTacGiaRepository;
     private TacGiaRepository tacGiaRepository;
 
     public DauSachController() {
         dauSachRepository = new DauSachRepository();
-        sachTacGiaRepository = new SachTacGiaRepository();
+        dauSachTacGiaRepository = new SachTacGiaRepository();
         tacGiaRepository = new TacGiaRepository();
     }
 
-    // Method to add a new book
-    public boolean addDauSach(String tuaSach, String tomTat, int sl, int maNN, int maVT, List<Integer> tacGiaIds) {
+    // Thêm đầu sách mới
+    public int addDauSach(String tuaSach, String tomTat, int sl, int maNN, int maVT, List<Integer> maTacGiaList) {
         DauSachModel dauSach = new DauSachModel(0, tuaSach, tomTat, sl, maNN, maVT);
         try {
-            int maSach = dauSachRepository.addDauSach(dauSach); // Get the generated book ID
-            for (int maTG : tacGiaIds) {
-                sachTacGiaRepository.addSachTacGia(new SachTacGiaModel(maSach, maTG));
+            int maSach = dauSachRepository.addDauSach(dauSach);
+            for (int maTacGia : maTacGiaList) {
+                dauSachTacGiaRepository.addSachTacGia(maSach, maTacGia);
             }
-            return true;
-        } catch (SQLException e) {
+            return maSach;
+        } catch (Exception e) {
             e.printStackTrace();
-            return false;
+            return 0;
         }
     }
 
-    // Method to update an existing book
-    public boolean updateDauSach(int maSach, String tuaSach, String tomTat, int sl, int maNN, int maVT, List<Integer> tacGiaIds) {
+    // Cập nhật đầu sách
+    public boolean updateDauSach(int maSach, String tuaSach, String tomTat, int sl, int maNN, int maVT, List<Integer> maTacGiaList) {
         DauSachModel dauSach = new DauSachModel(maSach, tuaSach, tomTat, sl, maNN, maVT);
         try {
             dauSachRepository.updateDauSach(dauSach);
-            sachTacGiaRepository.deleteSachTacGiaByMaSach(maSach);
-            for (int maTG : tacGiaIds) {
-                sachTacGiaRepository.addSachTacGia(new SachTacGiaModel(maSach, maTG));
+            dauSachTacGiaRepository.deleteSachTacGiaByMaSach(maSach);
+            for (int maTacGia : maTacGiaList) {
+                dauSachTacGiaRepository.addSachTacGia(maSach, maTacGia);
             }
             return true;
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
     }
 
-    // Method to delete a book by MaSach
+    // Xóa đầu sách
     public boolean deleteDauSach(int maSach) {
         try {
             dauSachRepository.deleteDauSach(maSach);
-            sachTacGiaRepository.deleteSachTacGiaByMaSach(maSach);
+            dauSachTacGiaRepository.deleteSachTacGiaByMaSach(maSach);
             return true;
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
     }
 
-    // Method to get a book by MaSach
+    // Lấy đầu sách theo mã
     public DauSachModel getDauSachById(int maSach) {
         try {
             return dauSachRepository.getDauSachById(maSach);
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
 
-    // Method to get all books
+    // Lấy tất cả đầu sách
     public List<DauSachModel> getAllDauSach() {
         try {
             return dauSachRepository.getAllDauSach();
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
 
-    // Method to populate JTable with books data
-    public void populateDauSachTable(JTable tableDauSach) {
-        List<DauSachModel> dauSachList = getAllDauSach();
-        DefaultTableModel tableModel = (DefaultTableModel) tableDauSach.getModel();
-        tableModel.setRowCount(0); // Clear existing rows
-        for (DauSachModel ds : dauSachList) {
-            tableModel.addRow(new Object[]{ds.getMaSach(), ds.getTuaSach(), ds.getTomTat(), ds.getSl(), ds.getMaNN(), ds.getMaVT()});
-        }
-    }
-
-    // Method to get authors by book ID
-    public List<TacGiaModel> getTacGiaByDauSachId(int dauSachId) {
+    // Lấy tác giả theo đầu sách
+    public List<TacGiaModel> getTacGiaByDauSachId(int maSach) {
         try {
-            return tacGiaRepository.getTacGiaByDauSachId(dauSachId);
-        } catch (SQLException e) {
+            return tacGiaRepository.getTacGiaByDauSachId(maSach);
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }

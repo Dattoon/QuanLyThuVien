@@ -2,6 +2,7 @@ package bookstore.repository;
 
 import bookstore.model.ViTriModel;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -39,17 +40,22 @@ public class ViTriRepository extends BaseRepository<ViTriModel> {
         }, maVT);
     }
 
-    public List<ViTriModel> getAllViTri() throws SQLException {
-        return getAll(SELECT_ALL_QUERY, new RowMapper<ViTriModel>() {
-            @Override
-            public ViTriModel mapRow(ResultSet resultSet) throws SQLException {
-                return new ViTriModel(
-                        resultSet.getInt("MaVT"),
-                        resultSet.getString("Khu"),
-                        resultSet.getString("Ke"),
-                        resultSet.getString("Ngan")
-                );
+   
+    public List<ViTriModel> getAllViTri() {
+        List<ViTriModel> list = new ArrayList<>();
+        String query = "SELECT * FROM ViTri";
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query);
+             ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                list.add(new ViTriModel(rs.getInt("MaVT"), rs.getString("Khu"), rs.getString("Ke"), rs.getString("Ngan")));
             }
-        });
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
     }
+
+    
+
 }
