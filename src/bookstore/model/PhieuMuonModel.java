@@ -1,13 +1,14 @@
 package bookstore.model;
 
+import java.sql.Date;
+
 public class PhieuMuonModel {
     private int maMuon;
-    private String ngayMuon;
-    private String ngayHetHan;
+    private Date ngayMuon;
+    private Date ngayHetHan;
     private int maDK;
 
-    // Constructor
-    public PhieuMuonModel(int maMuon, String ngayMuon, String ngayHetHan, int maDK) {
+    public PhieuMuonModel(int maMuon, Date ngayMuon, Date ngayHetHan, int maDK) {
         this.maMuon = maMuon;
         this.ngayMuon = ngayMuon;
         this.ngayHetHan = ngayHetHan;
@@ -23,19 +24,19 @@ public class PhieuMuonModel {
         this.maMuon = maMuon;
     }
 
-    public String getNgayMuon() {
+    public Date getNgayMuon() {
         return ngayMuon;
     }
 
-    public void setNgayMuon(String ngayMuon) {
+    public void setNgayMuon(Date ngayMuon) {
         this.ngayMuon = ngayMuon;
     }
 
-    public String getNgayHetHan() {
+    public Date getNgayHetHan() {
         return ngayHetHan;
     }
 
-    public void setNgayHetHan(String ngayHetHan) {
+    public void setNgayHetHan(Date ngayHetHan) {
         this.ngayHetHan = ngayHetHan;
     }
 

@@ -68,7 +68,7 @@ public class PhieuMuonView extends JFrame {
         gbcMaThe.fill = GridBagConstraints.HORIZONTAL;
         gbcMaThe.gridx = 0;
         gbcMaThe.gridy = 1;
-        contentPane.add(new JLabel("Mã Thẻ:"), gbcMaThe);
+        contentPane.add(new JLabel("Mã DK:"), gbcMaThe);
 
         txtMaThe = new JTextField();
         txtMaThe.setFont(new Font("Arial", Font.PLAIN, 16));

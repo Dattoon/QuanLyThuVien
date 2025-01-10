@@ -1,15 +1,16 @@
 package bookstore.model;
 
+import java.sql.Date;
+
 public class PhieuDangKyModel {
     private int maDK;
-    private String ngayDK;
     private int maDG;
+    private Date ngayDK;
 
-    // Constructor
-    public PhieuDangKyModel(int maDK, String ngayDK, int maDG) {
+    public PhieuDangKyModel(int maDK, int maDG, Date ngayDK) {
         this.maDK = maDK;
-        this.ngayDK = ngayDK;
         this.maDG = maDG;
+        this.ngayDK = ngayDK;
     }
 
     // Getters and setters
@@ -21,19 +22,19 @@ public class PhieuDangKyModel {
         this.maDK = maDK;
     }
 
-    public String getNgayDK() {
-        return ngayDK;
-    }
-
-    public void setNgayDK(String ngayDK) {
-        this.ngayDK = ngayDK;
-    }
-
     public int getMaDG() {
         return maDG;
     }
 
-    public void setMaDG(int maDG) {
-        this.maDG = maDG;
+    public void setMaDG(int maDocGia) {
+        this.maDG = maDocGia;
+    }
+
+    public Date getNgayDK() {
+        return ngayDK;
+    }
+
+    public void setNgayDK(Date ngayDK) {
+        this.ngayDK = ngayDK;
     }
 }
