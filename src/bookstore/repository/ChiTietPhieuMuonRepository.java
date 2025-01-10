@@ -6,19 +6,19 @@ import java.util.List;
 
 public class ChiTietPhieuMuonRepository extends BaseRepository<ChiTietPhieuMuonModel> {
 
-    private static final String INSERT_QUERY = "INSERT INTO ChiTietPhieuMuon (MaMuon, MaSach, NgayTra) VALUES (?, ?, ?)";
-    private static final String UPDATE_QUERY = "UPDATE ChiTietPhieuMuon SET MaMuon = ?, MaSach = ?, NgayTra = ? WHERE MaChiTiet = ?";
+    private static final String INSERT_QUERY = "INSERT INTO ChiTietPhieuMuon (MaDK, MaMuon, MaSach, NgayTra) VALUES (?, ?, ?, ?)";
+    private static final String UPDATE_QUERY = "UPDATE ChiTietPhieuMuon SET MaDK = ?, MaMuon = ?, MaSach = ?, NgayTra = ? WHERE MaChiTiet = ?";
     private static final String DELETE_QUERY = "DELETE FROM ChiTietPhieuMuon WHERE MaChiTiet = ?";
     private static final String SELECT_QUERY = "SELECT * FROM ChiTietPhieuMuon WHERE MaChiTiet = ?";
     private static final String SELECT_ALL_QUERY = "SELECT * FROM ChiTietPhieuMuon";
     private static final String SELECT_BY_MA_MUON_QUERY = "SELECT * FROM ChiTietPhieuMuon WHERE MaMuon = ?";
 
     public void addChiTietPhieuMuon(ChiTietPhieuMuonModel chiTietPhieuMuon) throws SQLException {
-        add(INSERT_QUERY, chiTietPhieuMuon.getMaMuon(), chiTietPhieuMuon.getMaSach(), chiTietPhieuMuon.getNgayTra());
+        add(INSERT_QUERY, chiTietPhieuMuon.getMaDK(), chiTietPhieuMuon.getMaMuon(), chiTietPhieuMuon.getMaSach(), chiTietPhieuMuon.getNgayTra());
     }
 
     public void updateChiTietPhieuMuon(ChiTietPhieuMuonModel chiTietPhieuMuon) throws SQLException {
-        edit(UPDATE_QUERY, chiTietPhieuMuon.getMaMuon(), chiTietPhieuMuon.getMaSach(), chiTietPhieuMuon.getNgayTra(), chiTietPhieuMuon.getMaChiTiet());
+        edit(UPDATE_QUERY, chiTietPhieuMuon.getMaDK(), chiTietPhieuMuon.getMaMuon(), chiTietPhieuMuon.getMaSach(), chiTietPhieuMuon.getNgayTra(), chiTietPhieuMuon.getMaChiTiet());
     }
 
     public void deleteChiTietPhieuMuon(int maChiTiet) throws SQLException {
@@ -30,10 +30,11 @@ public class ChiTietPhieuMuonRepository extends BaseRepository<ChiTietPhieuMuonM
             @Override
             public ChiTietPhieuMuonModel mapRow(ResultSet rs) throws SQLException {
                 return new ChiTietPhieuMuonModel(
-                        rs.getInt("MaChiTiet"),
-                        rs.getInt("MaMuon"),
-                        rs.getInt("MaSach"),
-                        rs.getDate("NgayTra")
+                    rs.getInt("MaChiTiet"),
+                    rs.getInt("MaDK"),
+                    rs.getInt("MaMuon"),
+                    rs.getInt("MaSach"),
+                    rs.getDate("NgayTra")
                 );
             }
         }, maChiTiet);
@@ -44,10 +45,11 @@ public class ChiTietPhieuMuonRepository extends BaseRepository<ChiTietPhieuMuonM
             @Override
             public ChiTietPhieuMuonModel mapRow(ResultSet rs) throws SQLException {
                 return new ChiTietPhieuMuonModel(
-                        rs.getInt("MaChiTiet"),
-                        rs.getInt("MaMuon"),
-                        rs.getInt("MaSach"),
-                        rs.getDate("NgayTra")
+                    rs.getInt("MaChiTiet"),
+                    rs.getInt("MaDK"),
+                    rs.getInt("MaMuon"),
+                    rs.getInt("MaSach"),
+                    rs.getDate("NgayTra")
                 );
             }
         });
@@ -58,10 +60,11 @@ public class ChiTietPhieuMuonRepository extends BaseRepository<ChiTietPhieuMuonM
             @Override
             public ChiTietPhieuMuonModel mapRow(ResultSet rs) throws SQLException {
                 return new ChiTietPhieuMuonModel(
-                        rs.getInt("MaChiTiet"),
-                        rs.getInt("MaMuon"),
-                        rs.getInt("MaSach"),
-                        rs.getDate("NgayTra")
+                    rs.getInt("MaChiTiet"),
+                    rs.getInt("MaDK"),
+                    rs.getInt("MaMuon"),
+                    rs.getInt("MaSach"),
+                    rs.getDate("NgayTra")
                 );
             }
         }, maMuon);

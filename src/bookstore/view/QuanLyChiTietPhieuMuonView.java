@@ -4,19 +4,17 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
-import java.sql.SQLException;
-import java.util.List;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import bookstore.controller.ChiTietPhieuMuonController;
-import bookstore.model.ChiTietPhieuMuonModel;
 
-public class ChiTietPhieuMuonView extends JFrame {
+public class QuanLyChiTietPhieuMuonView extends JFrame {
 
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
     private JTextField txtMaChiTiet;
+    private JTextField txtMaDK;
     private JTextField txtMaMuon;
     private JTextField txtMaSach;
     private JFormattedTextField txtNgayTra;
@@ -28,7 +26,7 @@ public class ChiTietPhieuMuonView extends JFrame {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    ChiTietPhieuMuonView frame = new ChiTietPhieuMuonView();
+                    QuanLyChiTietPhieuMuonView frame = new QuanLyChiTietPhieuMuonView();
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -37,7 +35,7 @@ public class ChiTietPhieuMuonView extends JFrame {
         });
     }
 
-    public ChiTietPhieuMuonView() {
+    public QuanLyChiTietPhieuMuonView() {
         chiTietPhieuMuonController = new ChiTietPhieuMuonController();
 
         setTitle("Quản Lý Chi Tiết Phiếu Mượn");
@@ -56,7 +54,7 @@ public class ChiTietPhieuMuonView extends JFrame {
 
         // Panel chứa các trường nhập liệu
         JPanel formPanel = new JPanel();
-        formPanel.setLayout(new GridLayout(5, 2, 10, 10));
+        formPanel.setLayout(new GridLayout(6, 2, 10, 10));
         contentPane.add(formPanel, BorderLayout.WEST);
 
         // Mã chi tiết
@@ -65,6 +63,12 @@ public class ChiTietPhieuMuonView extends JFrame {
         txtMaChiTiet = new JTextField();
         txtMaChiTiet.setEditable(false);
         formPanel.add(txtMaChiTiet);
+
+        // Mã ĐK
+        JLabel lblMaDK = new JLabel("Mã ĐK:");
+        formPanel.add(lblMaDK);
+        txtMaDK = new JTextField();
+        formPanel.add(txtMaDK);
 
         // Mã mượn
         JLabel lblMaMuon = new JLabel("Mã Mượn:");
@@ -84,7 +88,7 @@ public class ChiTietPhieuMuonView extends JFrame {
         txtNgayTra = new JFormattedTextField();
         formPanel.add(txtNgayTra);
 
-        // Nút Thêm, Sửa, Xóa và Hiển Thị
+        // Nút Thêm và Xóa
         JButton btnThem = new JButton("Thêm");
         btnThem.addActionListener(new ActionListener() {
             @Override
@@ -93,15 +97,6 @@ public class ChiTietPhieuMuonView extends JFrame {
             }
         });
         formPanel.add(btnThem);
-
-        JButton btnSua = new JButton("Sửa");
-        btnSua.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                updateChiTietPhieuMuon();
-            }
-        });
-        formPanel.add(btnSua);
 
         JButton btnXoa = new JButton("Xóa");
         btnXoa.addActionListener(new ActionListener() {
@@ -112,17 +107,8 @@ public class ChiTietPhieuMuonView extends JFrame {
         });
         formPanel.add(btnXoa);
 
-        JButton btnHienThi = new JButton("Hiển Thị");
-        btnHienThi.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                displayAllChiTietPhieuMuon();
-            }
-        });
-        formPanel.add(btnHienThi);
-
         // Bảng hiển thị danh sách chi tiết phiếu mượn
-        tableModel = new DefaultTableModel(new Object[]{"Mã Chi Tiết", "Mã Mượn", "Mã Sách", "Ngày Trả"}, 0);
+        tableModel = new DefaultTableModel(new Object[]{"Mã Chi Tiết", "Mã ĐK", "Mã Mượn", "Mã Sách", "Ngày Trả"}, 0);
         table = new JTable(tableModel);
         table.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -137,55 +123,45 @@ public class ChiTietPhieuMuonView extends JFrame {
     }
 
     private void addChiTietPhieuMuon() {
+        int maDK = Integer.parseInt(txtMaDK.getText());
         int maMuon = Integer.parseInt(txtMaMuon.getText());
         int maSach = Integer.parseInt(txtMaSach.getText());
         Date ngayTra = Date.valueOf(txtNgayTra.getText());
 
-        chiTietPhieuMuonController.registerChiTietPhieuMuon(maMuon, maSach, ngayTra);
-        displayAllChiTietPhieuMuon();
-    }
-
-    private void updateChiTietPhieuMuon() {
-        int maChiTiet = Integer.parseInt(txtMaChiTiet.getText());
-        int maMuon = Integer.parseInt(txtMaMuon.getText());
-        int maSach = Integer.parseInt(txtMaSach.getText());
-        Date ngayTra = Date.valueOf(txtNgayTra.getText());
-
-        chiTietPhieuMuonController.updateChiTietPhieuMuon(maChiTiet, maMuon, maSach, ngayTra);
+        chiTietPhieuMuonController.createChiTietPhieuMuon(maDK, maMuon, maSach);
         displayAllChiTietPhieuMuon();
     }
 
     private void deleteChiTietPhieuMuon() {
-        int maChiTiet = Integer.parseInt(txtMaChiTiet.getText());
-        chiTietPhieuMuonController.deleteChiTietPhieuMuon(maChiTiet);
-        displayAllChiTietPhieuMuon();
+        int selectedRow = table.getSelectedRow();
+        if (selectedRow != -1) {
+            int maChiTiet = (int) tableModel.getValueAt(selectedRow, 0);
+            chiTietPhieuMuonController.deleteChiTietPhieuMuon(maChiTiet);
+            displayAllChiTietPhieuMuon();
+        }
     }
 
     private void displayAllChiTietPhieuMuon() {
-        try {
-            List<ChiTietPhieuMuonModel> chiTietPhieuMuonList = chiTietPhieuMuonController.getAllChiTietPhieuMuon();
-            tableModel.setRowCount(0); // Clear existing rows
-            for (ChiTietPhieuMuonModel chiTietPhieuMuon : chiTietPhieuMuonList) {
-                tableModel.addRow(new Object[]{
-                        chiTietPhieuMuon.getMaChiTiet(),
-                        chiTietPhieuMuon.getMaMuon(),
-                        chiTietPhieuMuon.getMaSach(),
-                        chiTietPhieuMuon.getNgayTra()
-                });
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Có lỗi xảy ra trong quá trình hiển thị danh sách chi tiết phiếu mượn.", "Lỗi", JOptionPane.ERROR_MESSAGE);
-        }
+        tableModel.setRowCount(0); // Clear existing rows
+        chiTietPhieuMuonController.getAllChiTietPhieuMuon().forEach(chiTietPhieuMuon -> {
+            tableModel.addRow(new Object[]{
+                chiTietPhieuMuon.getMaChiTiet(),
+                chiTietPhieuMuon.getMaDK(),
+                chiTietPhieuMuon.getMaMuon(),
+                chiTietPhieuMuon.getMaSach(),
+                chiTietPhieuMuon.getNgayTra()
+            });
+        });
     }
 
     private void displaySelectedRow() {
         int selectedRow = table.getSelectedRow();
         if (selectedRow != -1) {
             txtMaChiTiet.setText(tableModel.getValueAt(selectedRow, 0).toString());
-            txtMaMuon.setText(tableModel.getValueAt(selectedRow, 1).toString());
-            txtMaSach.setText(tableModel.getValueAt(selectedRow, 2).toString());
-            txtNgayTra.setText(tableModel.getValueAt(selectedRow, 3).toString());
+            txtMaDK.setText(tableModel.getValueAt(selectedRow, 1).toString());
+            txtMaMuon.setText(tableModel.getValueAt(selectedRow, 2).toString());
+            txtMaSach.setText(tableModel.getValueAt(selectedRow, 3).toString());
+            txtNgayTra.setText(tableModel.getValueAt(selectedRow, 4).toString());
         }
     }
 }

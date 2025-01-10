@@ -16,25 +16,53 @@ public class ChiTietPhieuMuonController {
         chiTietPhieuMuonRepository = new ChiTietPhieuMuonRepository();
     }
 
-    public void registerChiTietPhieuMuon(int maMuon, int maSach, Date ngayTra) {
-        ChiTietPhieuMuonModel chiTietPhieuMuon = new ChiTietPhieuMuonModel(0, maMuon, maSach, ngayTra);
+    public void createChiTietPhieuMuon(int maDK, int maMuon, int maSach) {
+        Date ngayTra = null;
+        ChiTietPhieuMuonModel chiTietPhieuMuon = new ChiTietPhieuMuonModel(0, maDK, maMuon, maSach, ngayTra);
         try {
             chiTietPhieuMuonRepository.addChiTietPhieuMuon(chiTietPhieuMuon);
-            JOptionPane.showMessageDialog(null, "Đăng ký chi tiết phiếu mượn thành công!");
+            JOptionPane.showMessageDialog(null, "Tạo chi tiết phiếu mượn thành công!");
         } catch (SQLException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Có lỗi xảy ra trong quá trình đăng ký chi tiết phiếu mượn.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Có lỗi xảy ra trong quá trình tạo chi tiết phiếu mượn.", "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    public void updateChiTietPhieuMuon(int maChiTiet, int maMuon, int maSach, Date ngayTra) {
-        ChiTietPhieuMuonModel chiTietPhieuMuon = new ChiTietPhieuMuonModel(maChiTiet, maMuon, maSach, ngayTra);
+    public void updateChiTietPhieuMuon(int maChiTiet, int maDK, int maMuon, int maSach, Date ngayTra) {
+        ChiTietPhieuMuonModel chiTietPhieuMuon = new ChiTietPhieuMuonModel(maChiTiet, maDK, maMuon, maSach, ngayTra);
         try {
             chiTietPhieuMuonRepository.updateChiTietPhieuMuon(chiTietPhieuMuon);
             JOptionPane.showMessageDialog(null, "Cập nhật chi tiết phiếu mượn thành công!");
         } catch (SQLException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Có lỗi xảy ra trong quá trình cập nhật chi tiết phiếu mượn.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public ChiTietPhieuMuonModel getChiTietPhieuMuonById(int maChiTiet) {
+        try {
+            return chiTietPhieuMuonRepository.getChiTietPhieuMuonById(maChiTiet);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public List<ChiTietPhieuMuonModel> getAllChiTietPhieuMuon() {
+        try {
+            return chiTietPhieuMuonRepository.getAllChiTietPhieuMuon();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public List<ChiTietPhieuMuonModel> getChiTietPhieuMuonByMaMuon(int maMuon) {
+        try {
+            return chiTietPhieuMuonRepository.getChiTietPhieuMuonByMaMuon(maMuon);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 
@@ -46,13 +74,5 @@ public class ChiTietPhieuMuonController {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Có lỗi xảy ra trong quá trình xóa chi tiết phiếu mượn.", "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
-    }
-
-    public List<ChiTietPhieuMuonModel> getAllChiTietPhieuMuon() throws SQLException {
-        return chiTietPhieuMuonRepository.getAllChiTietPhieuMuon();
-    }
-
-    public List<ChiTietPhieuMuonModel> getChiTietPhieuMuonByMaMuon(int maMuon) throws SQLException {
-        return chiTietPhieuMuonRepository.getChiTietPhieuMuonByMaMuon(maMuon);
     }
 }

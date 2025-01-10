@@ -1,6 +1,7 @@
 package bookstore.controller;
 
 import bookstore.model.PhieuDangKyModel;
+import bookstore.repository.DocGiaRepository;
 import bookstore.repository.PhieuDangKyRepository;
 
 import javax.swing.*;
@@ -11,44 +12,50 @@ import java.util.List;
 public class PhieuDangKyController {
 
     private PhieuDangKyRepository phieuDangKyRepository;
+    private DocGiaRepository docGiaRepository;
 
     public PhieuDangKyController() {
         phieuDangKyRepository = new PhieuDangKyRepository();
+        docGiaRepository = new DocGiaRepository();
     }
 
-    public void registerPhieuDangKy(int maDocGia, Date ngayDK) {
-        PhieuDangKyModel phieuDangKy = new PhieuDangKyModel(0, maDocGia, ngayDK);
+    public void registerPhieuDangKy(String maThe, Date ngayDK) {
         try {
+            int maDG = docGiaRepository.getMaDGByMaThe(maThe);
+            PhieuDangKyModel phieuDangKy = new PhieuDangKyModel(0, maDG, ngayDK);
             phieuDangKyRepository.addPhieuDangKy(phieuDangKy);
-            JOptionPane.showMessageDialog(null, "Đăng ký phiếu thành công!");
+            JOptionPane.showMessageDialog(null, "Đăng ký mượn sách thành công!");
         } catch (SQLException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Có lỗi xảy ra trong quá trình đăng ký phiếu.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Có lỗi xảy ra trong quá trình đăng ký mượn sách.", "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    public void updatePhieuDangKy(int maDK, int maDocGia, Date ngayDK) {
-        PhieuDangKyModel phieuDangKy = new PhieuDangKyModel(maDK, maDocGia, ngayDK);
+    public PhieuDangKyModel getPhieuDangKyById(int maDK) {
         try {
-            phieuDangKyRepository.updatePhieuDangKy(phieuDangKy);
-            JOptionPane.showMessageDialog(null, "Cập nhật phiếu thành công!");
+            return phieuDangKyRepository.getPhieuDangKyById(maDK);
         } catch (SQLException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Có lỗi xảy ra trong quá trình cập nhật phiếu.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return null;
+        }
+    }
+
+    public List<PhieuDangKyModel> getAllPhieuDangKy() {
+        try {
+            return phieuDangKyRepository.getAllPhieuDangKy();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 
     public void deletePhieuDangKy(int maDK) {
         try {
             phieuDangKyRepository.deletePhieuDangKy(maDK);
-            JOptionPane.showMessageDialog(null, "Xóa phiếu thành công!");
+            JOptionPane.showMessageDialog(null, "Xóa phiếu đăng ký thành công!");
         } catch (SQLException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Có lỗi xảy ra trong quá trình xóa phiếu.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Có lỗi xảy ra trong quá trình xóa phiếu đăng ký.", "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
-    }
-
-    public List<PhieuDangKyModel> getAllPhieuDangKy() throws SQLException {
-        return phieuDangKyRepository.getAllPhieuDangKy();
     }
 }

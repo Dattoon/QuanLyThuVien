@@ -6,8 +6,8 @@ import java.util.List;
 
 public class PhieuMuonRepository extends BaseRepository<PhieuMuonModel> {
 
-    private static final String INSERT_QUERY = "INSERT INTO PhieuMuon (NgayMuon, NgayHetHan, MaDG) VALUES (?, ?, ?)";
-    private static final String UPDATE_QUERY = "UPDATE PhieuMuon SET NgayMuon = ?, NgayHetHan = ?, MaDG = ? WHERE MaMuon = ?";
+    private static final String INSERT_QUERY = "INSERT INTO PhieuMuon (NgayMuon, NgayHetHan, MaDK) VALUES (?, ?, ?)";
+    private static final String UPDATE_QUERY = "UPDATE PhieuMuon SET NgayMuon = ?, NgayHetHan = ?, MaDK = ? WHERE MaMuon = ?";
     private static final String DELETE_QUERY = "DELETE FROM PhieuMuon WHERE MaMuon = ?";
     private static final String SELECT_QUERY = "SELECT * FROM PhieuMuon WHERE MaMuon = ?";
     private static final String SELECT_ALL_QUERY = "SELECT * FROM PhieuMuon";

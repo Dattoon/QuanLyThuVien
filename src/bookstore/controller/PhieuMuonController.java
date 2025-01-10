@@ -17,20 +17,21 @@ public class PhieuMuonController {
         phieuMuonRepository = new PhieuMuonRepository();
     }
 
-    public void registerPhieuMuon(int maDK, Date ngayMuon) {
-        Date ngayHetHan = calculateExpiryDate(ngayMuon); // Hạn là 2 tuần kể từ ngày mượn
+    public void createPhieuMuon(int maDK) {
+        Date ngayMuon = new Date(System.currentTimeMillis());
+        Date ngayHetHan = calculateExpiryDate(ngayMuon);
         PhieuMuonModel phieuMuon = new PhieuMuonModel(0, ngayMuon, ngayHetHan, maDK);
         try {
             phieuMuonRepository.addPhieuMuon(phieuMuon);
-            JOptionPane.showMessageDialog(null, "Đăng ký phiếu mượn thành công!");
+            JOptionPane.showMessageDialog(null, "Tạo phiếu mượn thành công!");
         } catch (SQLException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Có lỗi xảy ra trong quá trình đăng ký phiếu mượn.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Có lỗi xảy ra trong quá trình tạo phiếu mượn.", "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     public void updatePhieuMuon(int maMuon, int maDK, Date ngayMuon) {
-        Date ngayHetHan = calculateExpiryDate(ngayMuon); // Hạn là 2 tuần kể từ ngày mượn
+        Date ngayHetHan = calculateExpiryDate(ngayMuon);
         PhieuMuonModel phieuMuon = new PhieuMuonModel(maMuon, ngayMuon, ngayHetHan, maDK);
         try {
             phieuMuonRepository.updatePhieuMuon(phieuMuon);
@@ -38,6 +39,24 @@ public class PhieuMuonController {
         } catch (SQLException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Có lỗi xảy ra trong quá trình cập nhật phiếu mượn.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public PhieuMuonModel getPhieuMuonById(int maMuon) {
+        try {
+            return phieuMuonRepository.getPhieuMuonById(maMuon);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public List<PhieuMuonModel> getAllPhieuMuon() {
+        try {
+            return phieuMuonRepository.getAllPhieuMuon();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 
@@ -51,14 +70,10 @@ public class PhieuMuonController {
         }
     }
 
-    public List<PhieuMuonModel> getAllPhieuMuon() throws SQLException {
-        return phieuMuonRepository.getAllPhieuMuon();
-    }
-
     private Date calculateExpiryDate(Date ngayMuon) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(ngayMuon);
-        calendar.add(Calendar.DAY_OF_YEAR, 14); // Thêm 2 tuần
+        calendar.add(Calendar.DAY_OF_YEAR, 14);
         return new Date(calendar.getTimeInMillis());
     }
 }
