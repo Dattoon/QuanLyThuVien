@@ -17,10 +17,9 @@ public class PhieuMuonController {
         phieuMuonRepository = new PhieuMuonRepository();
     }
 
-    public void createPhieuMuon(int maDK) {
-        Date ngayMuon = new Date(System.currentTimeMillis());
+    public void createPhieuMuon(int maDG, Date ngayMuon) {
         Date ngayHetHan = calculateExpiryDate(ngayMuon);
-        PhieuMuonModel phieuMuon = new PhieuMuonModel(0, ngayMuon, ngayHetHan, maDK);
+        PhieuMuonModel phieuMuon = new PhieuMuonModel(0, ngayMuon, ngayHetHan, maDG);
         try {
             phieuMuonRepository.addPhieuMuon(phieuMuon);
             JOptionPane.showMessageDialog(null, "Tạo phiếu mượn thành công!");
@@ -30,9 +29,9 @@ public class PhieuMuonController {
         }
     }
 
-    public void updatePhieuMuon(int maMuon, int maDK, Date ngayMuon) {
+    public void updatePhieuMuon(int maMuon, int maDG, Date ngayMuon) {
         Date ngayHetHan = calculateExpiryDate(ngayMuon);
-        PhieuMuonModel phieuMuon = new PhieuMuonModel(maMuon, ngayMuon, ngayHetHan, maDK);
+        PhieuMuonModel phieuMuon = new PhieuMuonModel(maMuon, ngayMuon, ngayHetHan, maDG);
         try {
             phieuMuonRepository.updatePhieuMuon(phieuMuon);
             JOptionPane.showMessageDialog(null, "Cập nhật phiếu mượn thành công!");
