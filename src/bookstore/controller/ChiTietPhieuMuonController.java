@@ -16,9 +16,8 @@ public class ChiTietPhieuMuonController {
         chiTietPhieuMuonRepository = new ChiTietPhieuMuonRepository();
     }
 
-    public void createChiTietPhieuMuon(int maDK, int maMuon, int maSach) {
-        Date ngayTra = null;
-        ChiTietPhieuMuonModel chiTietPhieuMuon = new ChiTietPhieuMuonModel(0, maDK, maMuon, maSach, ngayTra);
+    public void createChiTietPhieuMuon(int maMuon, int maSach, Date ngayTra, float tienPhat) {
+        ChiTietPhieuMuonModel chiTietPhieuMuon = new ChiTietPhieuMuonModel(0, maMuon, maSach, ngayTra, tienPhat);
         try {
             chiTietPhieuMuonRepository.addChiTietPhieuMuon(chiTietPhieuMuon);
             JOptionPane.showMessageDialog(null, "Tạo chi tiết phiếu mượn thành công!");
@@ -28,8 +27,8 @@ public class ChiTietPhieuMuonController {
         }
     }
 
-    public void updateChiTietPhieuMuon(int maChiTiet, int maDK, int maMuon, int maSach, Date ngayTra) {
-        ChiTietPhieuMuonModel chiTietPhieuMuon = new ChiTietPhieuMuonModel(maChiTiet, maDK, maMuon, maSach, ngayTra);
+    public void updateChiTietPhieuMuon(int maChiTiet, int maMuon, int maSach, Date ngayTra, float tienPhat) {
+        ChiTietPhieuMuonModel chiTietPhieuMuon = new ChiTietPhieuMuonModel(maChiTiet, maMuon, maSach, ngayTra, tienPhat);
         try {
             chiTietPhieuMuonRepository.updateChiTietPhieuMuon(chiTietPhieuMuon);
             JOptionPane.showMessageDialog(null, "Cập nhật chi tiết phiếu mượn thành công!");

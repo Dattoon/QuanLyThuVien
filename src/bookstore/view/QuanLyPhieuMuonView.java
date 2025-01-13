@@ -13,10 +13,10 @@ public class QuanLyPhieuMuonView extends JFrame {
 
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
-    private JTextField txtMaDK;
     private JTextField txtMaMuon;
     private JFormattedTextField txtNgayMuon;
     private JTextField txtNgayHetHan;
+    private JTextField txtMaDG;
     private JTable table;
     private DefaultTableModel tableModel;
     private PhieuMuonController phieuMuonController;
@@ -56,12 +56,6 @@ public class QuanLyPhieuMuonView extends JFrame {
         formPanel.setLayout(new GridLayout(5, 2, 10, 10));
         contentPane.add(formPanel, BorderLayout.WEST);
 
-        // Mã ĐK
-        JLabel lblMaDK = new JLabel("Mã ĐK:");
-        formPanel.add(lblMaDK);
-        txtMaDK = new JTextField();
-        formPanel.add(txtMaDK);
-
         // Mã mượn
         JLabel lblMaMuon = new JLabel("Mã Mượn:");
         formPanel.add(lblMaMuon);
@@ -81,6 +75,12 @@ public class QuanLyPhieuMuonView extends JFrame {
         txtNgayHetHan = new JTextField();
         txtNgayHetHan.setEditable(false);
         formPanel.add(txtNgayHetHan);
+
+        // Mã ĐG
+        JLabel lblMaDG = new JLabel("Mã ĐG:");
+        formPanel.add(lblMaDG);
+        txtMaDG = new JTextField();
+        formPanel.add(txtMaDG);
 
         // Nút Thêm và Xóa
         JButton btnThem = new JButton("Thêm");
@@ -102,7 +102,7 @@ public class QuanLyPhieuMuonView extends JFrame {
         formPanel.add(btnXoa);
 
         // Bảng hiển thị danh sách phiếu mượn
-        tableModel = new DefaultTableModel(new Object[]{"Mã Mượn", "Mã ĐK", "Ngày Mượn", "Ngày Hết Hạn"}, 0);
+        tableModel = new DefaultTableModel(new Object[]{"Mã Mượn", "Ngày Mượn", "Ngày Hết Hạn", "Mã ĐG"}, 0);
         table = new JTable(tableModel);
         table.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -117,10 +117,10 @@ public class QuanLyPhieuMuonView extends JFrame {
     }
 
     private void addPhieuMuon() {
-        int maDK = Integer.parseInt(txtMaDK.getText());
+        int maDG = Integer.parseInt(txtMaDG.getText());
         Date ngayMuon = Date.valueOf(txtNgayMuon.getText());
 
-        phieuMuonController.createPhieuMuon(maDK);
+        phieuMuonController.createPhieuMuon(maDG, ngayMuon);
         displayAllPhieuMuon();
     }
 
@@ -138,9 +138,9 @@ public class QuanLyPhieuMuonView extends JFrame {
         phieuMuonController.getAllPhieuMuon().forEach(phieuMuon -> {
             tableModel.addRow(new Object[]{
                 phieuMuon.getMaMuon(),
-                phieuMuon.getMaDK(),
                 phieuMuon.getNgayMuon(),
-                phieuMuon.getNgayHetHan()
+                phieuMuon.getNgayHetHan(),
+                phieuMuon.getMaDG()
             });
         });
     }
@@ -149,9 +149,9 @@ public class QuanLyPhieuMuonView extends JFrame {
         int selectedRow = table.getSelectedRow();
         if (selectedRow != -1) {
             txtMaMuon.setText(tableModel.getValueAt(selectedRow, 0).toString());
-            txtMaDK.setText(tableModel.getValueAt(selectedRow, 1).toString());
-            txtNgayMuon.setText(tableModel.getValueAt(selectedRow, 2).toString());
-            txtNgayHetHan.setText(tableModel.getValueAt(selectedRow, 3).toString());
+            txtNgayMuon.setText(tableModel.getValueAt(selectedRow, 1).toString());
+            txtNgayHetHan.setText(tableModel.getValueAt(selectedRow, 2).toString());
+            txtMaDG.setText(tableModel.getValueAt(selectedRow, 3).toString());
         }
     }
 }

@@ -3,25 +3,36 @@ package bookstore.model;
 import java.sql.Date;
 
 public class PhieuMuonModel {
+
     private int maMuon;
+    private int maDG;
     private Date ngayMuon;
     private Date ngayHetHan;
-    private int maDK;
 
-    public PhieuMuonModel(int maMuon, Date ngayMuon, Date ngayHetHan, int maDK) {
-        this.maMuon = maMuon;
-        this.ngayMuon = ngayMuon;
-        this.ngayHetHan = ngayHetHan;
-        this.maDK = maDK;
-    }
+    public PhieuMuonModel(int int1, Date date, Date date2, int int2) {
+    	this.maMuon  = int1;
+    	this.maDG =  int2;
+    	this.ngayHetHan = date2;
+    	this.ngayMuon = date;
+    	
+	}
+    
 
-    // Getters and setters
+	// Getters and Setters
     public int getMaMuon() {
         return maMuon;
     }
 
     public void setMaMuon(int maMuon) {
         this.maMuon = maMuon;
+    }
+
+    public int getMaDG() {
+        return maDG;
+    }
+
+    public void setMaDG(int maDG) {
+        this.maDG = maDG;
     }
 
     public Date getNgayMuon() {
@@ -38,13 +49,5 @@ public class PhieuMuonModel {
 
     public void setNgayHetHan(Date ngayHetHan) {
         this.ngayHetHan = ngayHetHan;
-    }
-
-    public int getMaDK() {
-        return maDK;
-    }
-
-    public void setMaDK(int maDK) {
-        this.maDK = maDK;
     }
 }
