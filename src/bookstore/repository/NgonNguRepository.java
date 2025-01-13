@@ -12,6 +12,11 @@ public class NgonNguRepository extends BaseRepository<NgonNguModel> {
 	private static final String DELETE_QUERY = "DELETE FROM NgonNgu WHERE MaNN = ?";
 	private static final String SELECT_QUERY = "SELECT * FROM NgonNgu WHERE MaNN = ?";
 	private static final String SELECT_ALL_QUERY = "SELECT * FROM NgonNgu";
+    private static final String SELECT_TEN_NGON_NGU = "SELECT TenNN FROM NgonNgu WHERE MaNN = ?";
+    
+    private static final String GET_ALL_NGON_NGU_NAMES_QUERY = "SELECT TenNN FROM NgonNgu";
+
+
 
 	public void addNgonNgu(NgonNguModel ngonNgu) throws SQLException {
 		add(INSERT_QUERY, ngonNgu.getTenNN());
@@ -48,5 +53,34 @@ public class NgonNguRepository extends BaseRepository<NgonNguModel> {
 		}
 		return list;
 	}
+	public String getTenNgonNguById(int maNN) throws SQLException {
+	    String query = "SELECT TenNN FROM NgonNgu WHERE MaNN = ?";
+	    try (Connection conn = getConnection();
+	         PreparedStatement stmt = conn.prepareStatement(query)) {
+	        stmt.setInt(1, maNN);
+	        try (ResultSet rs = stmt.executeQuery()) {
+	            if (rs.next()) {
+	                return rs.getString("TenNN");
+	            }
+	        }
+	    }
+	    return null; // Trả về null nếu không tìm thấy
+	}
+
+	public List<String> getAllNgonNguNames() {
+        List<String> ngonNguNames = new ArrayList<>();
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(GET_ALL_NGON_NGU_NAMES_QUERY);
+             ResultSet resultSet = statement.executeQuery()) {
+
+            while (resultSet.next()) {
+                ngonNguNames.add(resultSet.getString("TenNN"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ngonNguNames;
+    }
+	
 
 }

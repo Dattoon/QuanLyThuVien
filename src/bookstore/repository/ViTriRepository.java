@@ -13,6 +13,10 @@ public class ViTriRepository extends BaseRepository<ViTriModel> {
     private static final String DELETE_QUERY = "DELETE FROM ViTri WHERE MaVT = ?";
     private static final String SELECT_QUERY = "SELECT * FROM ViTri WHERE MaVT = ?";
     private static final String SELECT_ALL_QUERY = "SELECT * FROM ViTri";
+    private static final String SELECT_TEN_VI_TRI = "SELECT TenVT FROM ViTri WHERE MaVT = ?";
+    
+    private static final String GET_ALL_VI_TRI_NAMES_QUERY = "SELECT TenVT FROM ViTri";
+
 
     public void addViTri(ViTriModel viTri) throws SQLException {
         add(INSERT_QUERY, viTri.getKhu(), viTri.getKe(), viTri.getNgan());
@@ -27,34 +31,57 @@ public class ViTriRepository extends BaseRepository<ViTriModel> {
     }
 
     public ViTriModel getViTriById(int maVT) throws SQLException {
-        return getOne(SELECT_QUERY, new RowMapper<ViTriModel>() {
-            @Override
-            public ViTriModel mapRow(ResultSet resultSet) throws SQLException {
-                return new ViTriModel(
-                        resultSet.getInt("MaVT"),
-                        resultSet.getString("Khu"),
-                        resultSet.getString("Ke"),
-                        resultSet.getString("Ngan")
-                );
+        String query = "SELECT Khu, Ke, Ngan FROM ViTri WHERE MaVT = ?";
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, maVT);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return new ViTriModel(maVT, rs.getString("Khu"), rs.getString("Ke"), rs.getString("Ngan"));
+                }
             }
-        }, maVT);
+        }
+        return null; // Trả về null nếu không tìm thấy
     }
 
+
    
-    public List<ViTriModel> getAllViTri() {
-        List<ViTriModel> list = new ArrayList<>();
-        String query = "SELECT * FROM ViTri";
-        try (Connection conn = getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query);
-             ResultSet rs = stmt.executeQuery()) {
-            while (rs.next()) {
-                list.add(new ViTriModel(rs.getInt("MaVT"), rs.getString("Khu"), rs.getString("Ke"), rs.getString("Ngan")));
+	    public List<ViTriModel> getAllViTri() {
+	        List<ViTriModel> list = new ArrayList<>();
+	        String query = "SELECT * FROM ViTri";
+	        try (Connection conn = getConnection();
+	             PreparedStatement stmt = conn.prepareStatement(query);
+	             ResultSet rs = stmt.executeQuery()) {
+	            while (rs.next()) {
+	                list.add(new ViTriModel(rs.getInt("MaVT"), rs.getString("Khu"), rs.getString("Ke"), rs.getString("Ngan")));
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	        return list;
+	    }
+    
+    
+
+    
+    
+    
+    public List<String> getAllViTriNames() {
+        List<String> viTriNames = new ArrayList<>();
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(GET_ALL_VI_TRI_NAMES_QUERY);
+             ResultSet resultSet = statement.executeQuery()) {
+
+            while (resultSet.next()) {
+                viTriNames.add(resultSet.getString("TenVT"));
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return list;
+        return viTriNames;
     }
+    
+    
 
     
 

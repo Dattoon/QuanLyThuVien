@@ -1,31 +1,33 @@
 package bookstore.controller;
-
+import bookstore.model.SachTacGiaModel;
 import bookstore.model.TacGiaModel;
 import bookstore.repository.TacGiaRepository;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
+import bookstore.repository.SachTacGiaRepository;
+
 import java.util.List;
 
 public class TacGiaController {
+
     private TacGiaRepository tacGiaRepository;
 
+    private SachTacGiaRepository sachTacGiaRepository;
     public TacGiaController() {
         tacGiaRepository = new TacGiaRepository();
+        sachTacGiaRepository = new SachTacGiaRepository();
     }
 
-    // Thêm một tác giả mới
-    public boolean addTacGia(String tenTG, String diaChiTG) {
+    // Thêm tác giả mới
+    public int addTacGia(String tenTG, String diaChiTG) {
         TacGiaModel tacGia = new TacGiaModel(0, tenTG, diaChiTG);
         try {
-            tacGiaRepository.addTacGia(tacGia);
-            return true;
+            return tacGiaRepository.addTacGia(tacGia);
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
+            return 0;
         }
     }
 
-    // Cập nhật thông tin một tác giả
+    // Cập nhật thông tin tác giả
     public boolean updateTacGia(int maTG, String tenTG, String diaChiTG) {
         TacGiaModel tacGia = new TacGiaModel(maTG, tenTG, diaChiTG);
         try {
@@ -37,24 +39,15 @@ public class TacGiaController {
         }
     }
 
-    // Xóa một tác giả
-    public boolean deleteTacGia(int maTG) {
+    // Xóa tác giả
+    public boolean deleteTacGia(int maTacGia) {
         try {
-            tacGiaRepository.deleteTacGia(maTG);
+            sachTacGiaRepository.deleteSachTacGiaByMaTacGia(maTacGia); // Xóa quan hệ
+            tacGiaRepository.deleteTacGia(maTacGia); // Xóa tác giả
             return true;
         } catch (Exception e) {
             e.printStackTrace();
             return false;
-        }
-    }
-
-    // Lấy thông tin một tác giả theo mã tác giả
-    public TacGiaModel getTacGiaById(int maTG) {
-        try {
-            return tacGiaRepository.getTacGiaById(maTG);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
         }
     }
 
@@ -68,23 +61,14 @@ public class TacGiaController {
         }
     }
 
-    // Tìm kiếm tác giả theo từ khóa
-    public List<TacGiaModel> searchTacGia(String keyword) {
+    // Lấy tác giả theo mã
+    public TacGiaModel getTacGiaById(int maTG) {
         try {
-            return tacGiaRepository.searchTacGia(keyword);
+            return tacGiaRepository.getTacGiaById(maTG);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
-
-    // Đổ dữ liệu vào JTable
-    public void populateTacGiaTable(JTable tableTacGia) {
-        List<TacGiaModel> tacGiaList = getAllTacGia();
-        DefaultTableModel tableModel = (DefaultTableModel) tableTacGia.getModel();
-        tableModel.setRowCount(0); // Xóa các dòng hiện có
-        for (TacGiaModel tg : tacGiaList) {
-            tableModel.addRow(new Object[]{tg.getMaTG(), tg.getTenTG(), tg.getDiaChiTG()});
-        }
-    }
+    
 }

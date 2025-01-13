@@ -2,93 +2,134 @@ package bookstore.controller;
 
 import bookstore.model.DauSachModel;
 import bookstore.model.TacGiaModel;
-import bookstore.repository.DauSachRepository;
-import bookstore.repository.SachTacGiaRepository;
-import bookstore.repository.TacGiaRepository;
+import bookstore.model.ViTriModel;
+import bookstore.repository.*;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class DauSachController {
 
-    private DauSachRepository dauSachRepository;
-    private SachTacGiaRepository dauSachTacGiaRepository;
-    private TacGiaRepository tacGiaRepository;
+    private final DauSachRepository dauSachRepository;
+    private final SachTacGiaRepository sachTacGiaRepository;
+    private final TacGiaRepository tacGiaRepository;
+    private final NgonNguRepository ngonNguRepository;
+    private final ViTriRepository viTriRepository;
 
     public DauSachController() {
-        dauSachRepository = new DauSachRepository();
-        dauSachTacGiaRepository = new SachTacGiaRepository();
-        tacGiaRepository = new TacGiaRepository();
+        this.dauSachRepository = new DauSachRepository();
+        this.sachTacGiaRepository = new SachTacGiaRepository();
+        this.tacGiaRepository = new TacGiaRepository();
+        this.ngonNguRepository = new NgonNguRepository();
+        this.viTriRepository = new ViTriRepository();
     }
 
-    // Thêm đầu sách mới
-    public int addDauSach(String tuaSach, String tomTat, int sl, int maNN, int maVT, List<Integer> maTacGiaList) {
-        DauSachModel dauSach = new DauSachModel(0, tuaSach, tomTat, sl, maNN, maVT);
+    public int addDauSach(String tuaSach, String tomTat, int soLuong, int maNN, int maVT, List<Integer> maTacGiaList) {
         try {
+            DauSachModel dauSach = new DauSachModel(0, tuaSach, tomTat, soLuong, maNN, maVT);
             int maSach = dauSachRepository.addDauSach(dauSach);
+
+            // Liên kết sách với tác giả
             for (int maTacGia : maTacGiaList) {
-                dauSachTacGiaRepository.addSachTacGia(maSach, maTacGia);
+                sachTacGiaRepository.addSachTacGia(maSach, maTacGia);
             }
             return maSach;
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             return 0;
         }
     }
 
-    // Cập nhật đầu sách
-    public boolean updateDauSach(int maSach, String tuaSach, String tomTat, int sl, int maNN, int maVT, List<Integer> maTacGiaList) {
-        DauSachModel dauSach = new DauSachModel(maSach, tuaSach, tomTat, sl, maNN, maVT);
+    public boolean updateDauSach(int maSach, String tuaSach, String tomTat, int soLuong, int maNN, int maVT, List<Integer> maTacGiaList) {
         try {
+            DauSachModel dauSach = new DauSachModel(maSach, tuaSach, tomTat, soLuong, maNN, maVT);
             dauSachRepository.updateDauSach(dauSach);
-            dauSachTacGiaRepository.deleteSachTacGiaByMaSach(maSach);
+
+            // Cập nhật liên kết sách - tác giả
+            sachTacGiaRepository.deleteSachTacGiaByMaSach(maSach);
             for (int maTacGia : maTacGiaList) {
-                dauSachTacGiaRepository.addSachTacGia(maSach, maTacGia);
+                sachTacGiaRepository.addSachTacGia(maSach, maTacGia);
             }
             return true;
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
     }
 
-    // Xóa đầu sách
     public boolean deleteDauSach(int maSach) {
         try {
+            sachTacGiaRepository.deleteSachTacGiaByMaSach(maSach);
             dauSachRepository.deleteDauSach(maSach);
-            dauSachTacGiaRepository.deleteSachTacGiaByMaSach(maSach);
             return true;
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
     }
 
-    // Lấy đầu sách theo mã
-    public DauSachModel getDauSachById(int maSach) {
-        try {
-            return dauSachRepository.getDauSachById(maSach);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    // Lấy tất cả đầu sách
     public List<DauSachModel> getAllDauSach() {
         try {
             return dauSachRepository.getAllDauSach();
-        } catch (Exception e) {
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+
+    public List<TacGiaModel> getTacGiaByDauSachId(int maSach) {
+        try {
+            return tacGiaRepository.getTacGiaByDauSachId(maSach);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+
+    public List<String> getAllNgonNguNames() throws SQLException {
+        return ngonNguRepository.getAllNgonNguNames();
+    }
+    public String getTenNgonNgu(int maNN) {
+        try {
+            return ngonNguRepository.getTenNgonNguById(maNN);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null; // Trả về null nếu xảy ra lỗi
+        }
+    }
+
+    public String getTenViTri(int maVT) {
+        try {
+            ViTriModel viTri = viTriRepository.getViTriById(maVT);
+            if (viTri != null) {
+                return String.format("Khu: %s, Kệ: %s, Ngăn: %s", viTri.getKhu(), viTri.getKe(), viTri.getNgan());
+            }
+            return null; // Trả về null nếu không tìm thấy vị trí
+        } catch (SQLException e) {
             e.printStackTrace();
             return null;
         }
     }
 
-    // Lấy tác giả theo đầu sách
-    public List<TacGiaModel> getTacGiaByDauSachId(int maSach) {
+
+    public List<String> getAllViTri() throws SQLException {
+        List<ViTriModel> viTriModels = viTriRepository.getAllViTri();
+		return viTriModels.stream()
+		        .map(vt -> String.format("Khu: %s, Kệ: %s, Ngăn: %s", vt.getKhu(), vt.getKe(), vt.getNgan()))
+		        .collect(Collectors.toList());
+    }
+
+    public List<String> getAllTacGiaNames() {
         try {
-            return tacGiaRepository.getTacGiaByDauSachId(maSach);
-        } catch (Exception e) {
+            return tacGiaRepository.getAllTacGia()
+                    .stream()
+                    .map(TacGiaModel::getTenTG)
+                    .collect(Collectors.toList());
+        } catch (SQLException e) {
             e.printStackTrace();
-            return null;
+            return new ArrayList<>();
         }
     }
 }
