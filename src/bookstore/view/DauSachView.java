@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 import bookstore.controller.DauSachController;
 import bookstore.model.DauSachModel;
 import bookstore.model.TacGiaModel;
+import bookstore.share.MenuBarAdmin;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -67,6 +68,10 @@ public class DauSachView extends JFrame {
 
 		setContentPane(contentPane);
 		controller = new DauSachController();
+		
+		// Tích hợp MenuBarAdmin
+				MenuBarAdmin menuBarAdmin = new MenuBarAdmin();
+				setJMenuBar(menuBarAdmin);
 		initComponents();
 		loadData();
 

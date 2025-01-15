@@ -9,6 +9,7 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import bookstore.controller.ViTriSachController;
 import bookstore.model.ViTriModel;
+import bookstore.share.MenuBarAdmin;
 
 public class ViTriSachView extends JFrame {
 
@@ -58,6 +59,10 @@ public class ViTriSachView extends JFrame {
         JPanel centerPanel = new JPanel();
         centerPanel.setLayout(new BorderLayout());
         contentPane.add(centerPanel, BorderLayout.CENTER);
+        
+     // Tích hợp MenuBarAdmin
+     		MenuBarAdmin menuBarAdmin = new MenuBarAdmin();
+     		setJMenuBar(menuBarAdmin);
 
         // Form panel (for input fields)
         JPanel formPanel = new JPanel();

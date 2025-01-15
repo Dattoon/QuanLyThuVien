@@ -11,6 +11,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import bookstore.controller.DocGiaController;
 import bookstore.model.DocGiaModel;
+import bookstore.share.MenuBarAdmin;
 
 public class QuanLyDocGiaView extends JFrame {
 
@@ -51,6 +52,10 @@ public class QuanLyDocGiaView extends JFrame {
         contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
         contentPane.setLayout(new BorderLayout(10, 10));
         setContentPane(contentPane);
+        
+     // Tích hợp MenuBarAdmin
+     		MenuBarAdmin menuBarAdmin = new MenuBarAdmin();
+     		setJMenuBar(menuBarAdmin);
 
         // Tiêu đề "Quản lý độc giả"
         JLabel lblTitle = new JLabel("Quản Lý Độc Giả", JLabel.CENTER);

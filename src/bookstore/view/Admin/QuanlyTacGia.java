@@ -11,6 +11,7 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import bookstore.controller.TacGiaController;
 import bookstore.model.TacGiaModel;
+import bookstore.share.MenuBarAdmin;
 
 public class QuanlyTacGia extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -42,6 +43,9 @@ public class QuanlyTacGia extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
+		// Tích hợp MenuBarAdmin
+				MenuBarAdmin menuBarAdmin = new MenuBarAdmin();
+				setJMenuBar(menuBarAdmin);
 
 		// Header panel
 		JPanel headerPanel = new JPanel();

@@ -4,6 +4,9 @@ import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+
+import bookstore.share.MenuBarAdmin;
+
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
@@ -43,6 +46,10 @@ public class QuanlyDauSach extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
+		
+		// Tích hợp MenuBarAdmin
+				MenuBarAdmin menuBarAdmin = new MenuBarAdmin();
+				setJMenuBar(menuBarAdmin);
 
 		// Header panel
 		JPanel headerPanel = new JPanel();

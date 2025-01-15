@@ -10,6 +10,7 @@ import java.time.format.DateTimeParseException;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import bookstore.controller.PhieuDangKyController;
+import bookstore.share.MenuBarAdmin;
 
 public class DangKyMuonSachView extends JFrame {
 
@@ -43,6 +44,10 @@ public class DangKyMuonSachView extends JFrame {
         contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
         contentPane.setLayout(new BorderLayout(10, 10));
         setContentPane(contentPane);
+        
+     // Tích hợp MenuBarAdmin
+     		MenuBarAdmin menuBarAdmin = new MenuBarAdmin();
+     		setJMenuBar(menuBarAdmin);
 
         // Tiêu đề "Đăng Ký Mượn Sách"
         JLabel lblTitle = new JLabel("Đăng Ký Mượn Sách", JLabel.CENTER);

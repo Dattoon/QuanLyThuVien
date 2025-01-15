@@ -12,6 +12,7 @@ import javax.swing.text.MaskFormatter;
 import java.text.ParseException;
 import bookstore.controller.DocGiaController;
 import bookstore.model.DocGiaModel;
+import bookstore.share.MenuBarAdmin;
 
 public class GiaHanTheView extends JFrame {
 
@@ -46,6 +47,10 @@ public class GiaHanTheView extends JFrame {
         contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
         contentPane.setLayout(new BorderLayout(10, 10));
         setContentPane(contentPane);
+        
+     // Tích hợp MenuBarAdmin
+     		MenuBarAdmin menuBarAdmin = new MenuBarAdmin();
+     		setJMenuBar(menuBarAdmin);
 
         // Tiêu đề "Gia hạn thẻ"
         JLabel lblTitle = new JLabel("Gia Hạn Thẻ", JLabel.CENTER);

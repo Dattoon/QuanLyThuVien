@@ -8,6 +8,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import bookstore.controller.PhieuMuonController;
+import bookstore.share.MenuBarAdmin;
 
 public class QuanLyPhieuMuonView extends JFrame {
 
@@ -45,6 +46,10 @@ public class QuanLyPhieuMuonView extends JFrame {
         contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
         contentPane.setLayout(new BorderLayout(10, 10));
         setContentPane(contentPane);
+        
+     // Tích hợp MenuBarAdmin
+     		MenuBarAdmin menuBarAdmin = new MenuBarAdmin();
+     		setJMenuBar(menuBarAdmin);
 
         // Tiêu đề "Quản lý phiếu mượn"
         JLabel lblTitle = new JLabel("Quản Lý Phiếu Mượn", JLabel.CENTER);

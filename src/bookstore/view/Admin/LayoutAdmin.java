@@ -10,6 +10,7 @@ import bookstore.controller.LayoutAdminController;
 import bookstore.share.MenuBarAdmin; // Import lớp MenuBarAdmin
 import bookstore.view.DangKyDocGia;
 import bookstore.view.GiaHanTheView;
+import bookstore.view.QuanLyPhieuMuonView;
 
 public class LayoutAdmin extends JFrame {
 
@@ -107,6 +108,11 @@ public class LayoutAdmin extends JFrame {
 		gbc_btnOption1.gridy = 0;
 		gbc_btnOption1.insets = new Insets(10, 5, 10, 5);
 		buttonPanel.add(btnOption1, gbc_btnOption1);
+		btnOption1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new QuanLyPhieuMuonView().setVisible(true);
+			}
+		});
 
 		JButton btnOption2 = new JButton("TRẢ SÁCH");
 		btnOption2.setPreferredSize(new Dimension(200, 60));

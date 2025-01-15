@@ -9,6 +9,7 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import bookstore.controller.NgonNguController;
 import bookstore.model.NgonNguModel;
+import bookstore.share.MenuBarAdmin;
 
 public class NgonNguView extends JFrame {
 
@@ -42,6 +43,10 @@ public class NgonNguView extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
+		
+		// Tích hợp MenuBarAdmin
+				MenuBarAdmin menuBarAdmin = new MenuBarAdmin();
+				setJMenuBar(menuBarAdmin);
 
 		// Header panel
 		JPanel headerPanel = new JPanel();
