@@ -5,18 +5,17 @@ import java.sql.Date;
 public class ChiTietPhieuMuonModel {
     private int maChiTiet;
     private int maMuon;
-    private int maSach;
     private Date ngayTra;
     private Float tienPhat;
 
-    public ChiTietPhieuMuonModel(int maChiTiet, int maMuon, int maSach, Date ngayTra, Float tienPhat) {
+    public ChiTietPhieuMuonModel(int maChiTiet, int maMuon, Date ngayTra, Float tienPhat) {
         this.maChiTiet = maChiTiet;
         this.maMuon = maMuon;
-        this.maSach = maSach;
         this.ngayTra = ngayTra;
         this.tienPhat = tienPhat;
     }
 
+    // Getters and Setters
     public int getMaChiTiet() {
         return maChiTiet;
     }
@@ -33,13 +32,6 @@ public class ChiTietPhieuMuonModel {
         this.maMuon = maMuon;
     }
 
-    public int getMaSach() {
-        return maSach;
-    }
-
-    public void setMaSach(int maSach) {
-        this.maSach = maSach;
-    }
 
     public Date getNgayTra() {
         return ngayTra;

@@ -12,9 +12,8 @@ public class DocGiaRepository extends BaseRepository<DocGiaModel> {
     private static final String SELECT_QUERY = "SELECT * FROM DocGia WHERE MaDG = ?";
     private static final String SELECT_ALL_QUERY = "SELECT * FROM DocGia";
     private static final String SELECT_BY_MA_THE_QUERY = "SELECT * FROM DocGia WHERE MaThe = ?";
-    
     private static final String SELECT_QUERY_BY_MA_THE = "SELECT MaDG FROM DocGia WHERE MaThe = ?";
-
+    private static final String SELECT_TEN_DG_BY_MA_DG = "SELECT TenDG FROM DocGia WHERE MaDG = ?";
 
     public void addDocGia(DocGiaModel docGia) throws SQLException {
         try (Connection conn = getConnection();
@@ -109,17 +108,31 @@ public class DocGiaRepository extends BaseRepository<DocGiaModel> {
         }
         return null;
     }
+
     public int getMaDGByMaThe(String maThe) throws SQLException {
-		try (Connection connection = getConnection();
-				PreparedStatement preparedStatement = connection.prepareStatement(SELECT_QUERY_BY_MA_THE)) {
-			preparedStatement.setString(1, maThe);
-			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				if (resultSet.next()) {
-					return resultSet.getInt("MaDG");
-				} else {
-					throw new SQLException("Mã thẻ không tồn tại.");
-				}
-			}
-		}
-	}
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_QUERY_BY_MA_THE)) {
+            preparedStatement.setString(1, maThe);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt("MaDG");
+                } else {
+                    throw new SQLException("Mã thẻ không tồn tại.");
+                }
+            }
+        }
+    }
+
+    public String getTenDGByMaDG(int maDG) throws SQLException {
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(SELECT_TEN_DG_BY_MA_DG)) {
+            stmt.setInt(1, maDG);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getString("TenDG");
+                }
+            }
+        }
+        return null;
+    }
 }

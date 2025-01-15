@@ -11,6 +11,7 @@ import javax.swing.JMenuItem;
 import bookstore.view.DauSachView;
 import bookstore.view.GiaHanTheView;
 import bookstore.view.NgonNguView;
+import bookstore.view.QuanLyDocGiaView;
 import bookstore.view.ViTriSachView;
 import bookstore.view.Admin.QuanlyDauSach;
 import bookstore.view.Admin.QuanlyDocGia;
@@ -80,7 +81,7 @@ public class MenuBarAdmin extends JMenuBar {
         statsMenu.add(manageReadersItem);
         manageReadersItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new QuanlyDocGia().setVisible(true);
+				new QuanLyDocGiaView().setVisible(true);
 			}
 		});
 

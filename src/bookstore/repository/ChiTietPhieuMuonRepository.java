@@ -16,11 +16,11 @@ public class ChiTietPhieuMuonRepository extends BaseRepository<ChiTietPhieuMuonM
     private static final String UPDATE_TIEN_PHAT_QUERY = "UPDATE ChiTietPhieuMuon SET TienPhat = ? WHERE MaMuon = ?";
 
     public void addChiTietPhieuMuon(ChiTietPhieuMuonModel chiTietPhieuMuon) throws SQLException {
-        add(INSERT_QUERY, chiTietPhieuMuon.getMaMuon(), chiTietPhieuMuon.getMaSach(), chiTietPhieuMuon.getNgayTra(), chiTietPhieuMuon.getTienPhat());
+        add(INSERT_QUERY, chiTietPhieuMuon.getMaMuon(), chiTietPhieuMuon.getNgayTra(), chiTietPhieuMuon.getTienPhat());
     }
 
     public void updateChiTietPhieuMuon(ChiTietPhieuMuonModel chiTietPhieuMuon) throws SQLException {
-        edit(UPDATE_QUERY, chiTietPhieuMuon.getMaMuon(), chiTietPhieuMuon.getMaSach(), chiTietPhieuMuon.getNgayTra(), chiTietPhieuMuon.getTienPhat(), chiTietPhieuMuon.getMaChiTiet());
+        edit(UPDATE_QUERY, chiTietPhieuMuon.getMaMuon(), chiTietPhieuMuon.getNgayTra(), chiTietPhieuMuon.getTienPhat(), chiTietPhieuMuon.getMaChiTiet());
     }
 
     public void deleteChiTietPhieuMuon(int maChiTiet) throws SQLException {
@@ -34,7 +34,6 @@ public class ChiTietPhieuMuonRepository extends BaseRepository<ChiTietPhieuMuonM
                 return new ChiTietPhieuMuonModel(
                     rs.getInt("MaChiTiet"),
                     rs.getInt("MaMuon"),
-                    rs.getInt("MaSach"),
                     rs.getDate("NgayTra"),
                     rs.getFloat("TienPhat")
                 );
@@ -49,7 +48,6 @@ public class ChiTietPhieuMuonRepository extends BaseRepository<ChiTietPhieuMuonM
                 return new ChiTietPhieuMuonModel(
                     rs.getInt("MaChiTiet"),
                     rs.getInt("MaMuon"),
-                    rs.getInt("MaSach"),
                     rs.getDate("NgayTra"),
                     rs.getFloat("TienPhat")
                 );
@@ -64,7 +62,6 @@ public class ChiTietPhieuMuonRepository extends BaseRepository<ChiTietPhieuMuonM
                 return new ChiTietPhieuMuonModel(
                     rs.getInt("MaChiTiet"),
                     rs.getInt("MaMuon"),
-                    rs.getInt("MaSach"),
                     rs.getDate("NgayTra"),
                     rs.getFloat("TienPhat")
                 );

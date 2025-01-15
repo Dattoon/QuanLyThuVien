@@ -29,14 +29,12 @@ public class QuanLyDocGiaView extends JFrame {
     private DocGiaController docGiaController;
 
     public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    QuanLyDocGiaView frame = new QuanLyDocGiaView();
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        EventQueue.invokeLater(() -> {
+            try {
+                QuanLyDocGiaView frame = new QuanLyDocGiaView();
+                frame.setVisible(true);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
     }
@@ -46,118 +44,107 @@ public class QuanLyDocGiaView extends JFrame {
 
         setTitle("Quản Lý Độc Giả");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 800, 600);
+        setBounds(100, 100, 900, 600);
 
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
         contentPane.setLayout(new BorderLayout(10, 10));
         setContentPane(contentPane);
-        
-     // Tích hợp MenuBarAdmin
-     		MenuBarAdmin menuBarAdmin = new MenuBarAdmin();
-     		setJMenuBar(menuBarAdmin);
 
-        // Tiêu đề "Quản lý độc giả"
+        // Menu bar
+        MenuBarAdmin menuBarAdmin = new MenuBarAdmin();
+        setJMenuBar(menuBarAdmin);
+
+        // Title
         JLabel lblTitle = new JLabel("Quản Lý Độc Giả", JLabel.CENTER);
-        lblTitle.setFont(new Font("Arial", Font.BOLD, 20));
+        lblTitle.setFont(new Font("Arial", Font.BOLD, 24));
+        lblTitle.setForeground(new Color(0, 102, 204));
         contentPane.add(lblTitle, BorderLayout.NORTH);
 
-        // Panel chứa các trường nhập liệu
+        // Main panel
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new BorderLayout(10, 10));
+        contentPane.add(mainPanel, BorderLayout.CENTER);
+
+        // Form panel
         JPanel formPanel = new JPanel();
         formPanel.setLayout(new GridLayout(8, 2, 10, 10));
-        contentPane.add(formPanel, BorderLayout.WEST);
+        formPanel.setBorder(BorderFactory.createTitledBorder("Thông Tin Độc Giả"));
+        mainPanel.add(formPanel, BorderLayout.WEST);
 
-        // Mã độc giả
-        JLabel lblMaDG = new JLabel("Mã Độc Giả:");
-        formPanel.add(lblMaDG);
+        // Labels and text fields
+        formPanel.add(new JLabel("Mã Độc Giả:"));
         txtMaDG = new JTextField();
         txtMaDG.setEditable(false);
         formPanel.add(txtMaDG);
 
-        // Tên độc giả
-        JLabel lblTenDocGia = new JLabel("Tên Độc Giả:");
-        formPanel.add(lblTenDocGia);
+        formPanel.add(new JLabel("Tên Độc Giả:"));
         txtTenDocGia = new JTextField();
         formPanel.add(txtTenDocGia);
 
-        // Ngày sinh
-        JLabel lblNgaySinh = new JLabel("Ngày Sinh:");
-        formPanel.add(lblNgaySinh);
+        formPanel.add(new JLabel("Ngày Sinh:"));
         txtNgaySinh = new JFormattedTextField();
         formPanel.add(txtNgaySinh);
 
-        // Số điện thoại
-        JLabel lblSoDienThoai = new JLabel("Số Điện Thoại:");
-        formPanel.add(lblSoDienThoai);
+        formPanel.add(new JLabel("Số Điện Thoại:"));
         txtSoDienThoai = new JTextField();
         formPanel.add(txtSoDienThoai);
 
-        // Địa chỉ
-        JLabel lblDiaChi = new JLabel("Địa Chỉ:");
-        formPanel.add(lblDiaChi);
+        formPanel.add(new JLabel("Địa Chỉ:"));
         txtDiaChi = new JTextField();
         formPanel.add(txtDiaChi);
 
-        // Mã thẻ
-        JLabel lblMaThe = new JLabel("Mã Thẻ:");
-        formPanel.add(lblMaThe);
+        formPanel.add(new JLabel("Mã Thẻ:"));
         txtMaThe = new JTextField();
         formPanel.add(txtMaThe);
 
-        // Ngày hết hạn
-        JLabel lblNgayHetHan = new JLabel("Ngày Hết Hạn:");
-        formPanel.add(lblNgayHetHan);
+        formPanel.add(new JLabel("Ngày Hết Hạn:"));
         txtNgayHetHan = new JFormattedTextField();
         formPanel.add(txtNgayHetHan);
 
-        // Nút Thêm, Sửa, Xóa, và Hiển Thị
+        // Buttons
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new GridLayout(1, 4, 10, 10));
+
         JButton btnThem = new JButton("Thêm");
-        btnThem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                addDocGia();
-            }
-        });
-        formPanel.add(btnThem);
+        btnThem.setBackground(new Color(102, 204, 255));
+        btnThem.addActionListener(e -> addDocGia());
+        buttonPanel.add(btnThem);
 
         JButton btnSua = new JButton("Sửa");
-        btnSua.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                updateDocGia();
-            }
-        });
-        formPanel.add(btnSua);
+        btnSua.setBackground(new Color(102, 255, 153));
+        btnSua.addActionListener(e -> updateDocGia());
+        buttonPanel.add(btnSua);
 
         JButton btnXoa = new JButton("Xóa");
-        btnXoa.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                deleteDocGia();
-            }
-        });
-        formPanel.add(btnXoa);
+        btnXoa.setBackground(new Color(255, 102, 102));
+        btnXoa.addActionListener(e -> deleteDocGia());
+        buttonPanel.add(btnXoa);
 
         JButton btnHienThi = new JButton("Hiển Thị");
-        btnHienThi.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                displayAllDocGia();
-            }
-        });
-        formPanel.add(btnHienThi);
+        btnHienThi.setBackground(new Color(204, 204, 204));
+        btnHienThi.addActionListener(e -> displayAllDocGia());
+        buttonPanel.add(btnHienThi);
 
-        // Bảng hiển thị danh sách độc giả
-        tableModel = new DefaultTableModel(new Object[]{"Mã ĐG", "Tên Độc Giả", "Ngày Sinh", "Địa Chỉ", "Số ĐT", "Mã Thẻ", "Ngày Hết Hạn"}, 0);
+        formPanel.add(new JLabel());
+        formPanel.add(buttonPanel);
+
+        // Table panel
+        JPanel tablePanel = new JPanel();
+        tablePanel.setLayout(new BorderLayout(10, 10));
+        tablePanel.setBorder(BorderFactory.createTitledBorder("Danh Sách Độc Giả"));
+        mainPanel.add(tablePanel, BorderLayout.CENTER);
+
+        tableModel = new DefaultTableModel(
+                new Object[]{"Mã ĐG", "Tên Độc Giả", "Ngày Sinh", "Địa Chỉ", "Số ĐT", "Mã Thẻ", "Ngày Hết Hạn"}, 0);
         table = new JTable(tableModel);
         table.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 displaySelectedRow();
             }
         });
-
         JScrollPane scrollPane = new JScrollPane(table);
-        contentPane.add(scrollPane, BorderLayout.CENTER);
+        tablePanel.add(scrollPane, BorderLayout.CENTER);
 
         displayAllDocGia();
     }
@@ -195,7 +182,7 @@ public class QuanLyDocGiaView extends JFrame {
     private void displayAllDocGia() {
         try {
             List<DocGiaModel> docGiaList = docGiaController.getAllDocGia();
-            tableModel.setRowCount(0); // Clear existing rows
+            tableModel.setRowCount(0);
             for (DocGiaModel docGia : docGiaList) {
                 tableModel.addRow(new Object[]{
                         docGia.getMaDG(),

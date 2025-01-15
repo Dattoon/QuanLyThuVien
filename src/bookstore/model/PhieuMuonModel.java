@@ -8,17 +8,17 @@ public class PhieuMuonModel {
     private int maDG;
     private Date ngayMuon;
     private Date ngayHetHan;
+    private int maSach;
 
-    public PhieuMuonModel(int int1, Date date, Date date2, int int2) {
-    	this.maMuon  = int1;
-    	this.maDG =  int2;
-    	this.ngayHetHan = date2;
-    	this.ngayMuon = date;
-    	
-	}
-    
+    public PhieuMuonModel(int maMuon, Date ngayMuon, Date ngayHetHan, int maDG, int maSach) {
+        this.maMuon = maMuon;
+        this.maDG = maDG;
+        this.ngayMuon = ngayMuon;
+        this.ngayHetHan = ngayHetHan;
+        this.maSach = maSach;
+    }
 
-	// Getters and Setters
+    // Getters and Setters
     public int getMaMuon() {
         return maMuon;
     }
@@ -49,5 +49,13 @@ public class PhieuMuonModel {
 
     public void setNgayHetHan(Date ngayHetHan) {
         this.ngayHetHan = ngayHetHan;
+    }
+
+    public int getMaSach() {
+        return maSach;
+    }
+
+    public void setMaSach(int maSach) {
+        this.maSach = maSach;
     }
 }

@@ -6,18 +6,18 @@ import java.util.List;
 
 public class PhieuMuonRepository extends BaseRepository<PhieuMuonModel> {
 
-    private static final String INSERT_QUERY = "INSERT INTO PhieuMuon (NgayMuon, NgayHetHan, MaDG) VALUES (?, ?, ?)";
-    private static final String UPDATE_QUERY = "UPDATE PhieuMuon SET NgayMuon = ?, NgayHetHan = ?, MaDG = ? WHERE MaMuon = ?";
+    private static final String INSERT_QUERY = "INSERT INTO PhieuMuon (NgayMuon, NgayHetHan, MaDG, MaSach) VALUES (?, ?, ?, ?)";
+    private static final String UPDATE_QUERY = "UPDATE PhieuMuon SET NgayMuon = ?, NgayHetHan = ?, MaDG = ?, MaSach = ? WHERE MaMuon = ?";
     private static final String DELETE_QUERY = "DELETE FROM PhieuMuon WHERE MaMuon = ?";
     private static final String SELECT_QUERY = "SELECT * FROM PhieuMuon WHERE MaMuon = ?";
     private static final String SELECT_ALL_QUERY = "SELECT * FROM PhieuMuon";
 
     public void addPhieuMuon(PhieuMuonModel phieuMuon) throws SQLException {
-        add(INSERT_QUERY, phieuMuon.getNgayMuon(), phieuMuon.getNgayHetHan(), phieuMuon.getMaDG());
+        add(INSERT_QUERY, phieuMuon.getNgayMuon(), phieuMuon.getNgayHetHan(), phieuMuon.getMaDG(), phieuMuon.getMaSach());
     }
 
     public void updatePhieuMuon(PhieuMuonModel phieuMuon) throws SQLException {
-        edit(UPDATE_QUERY, phieuMuon.getNgayMuon(), phieuMuon.getNgayHetHan(), phieuMuon.getMaDG(), phieuMuon.getMaMuon());
+        edit(UPDATE_QUERY, phieuMuon.getNgayMuon(), phieuMuon.getNgayHetHan(), phieuMuon.getMaDG(), phieuMuon.getMaSach(), phieuMuon.getMaMuon());
     }
 
     public void deletePhieuMuon(int maMuon) throws SQLException {
@@ -32,7 +32,8 @@ public class PhieuMuonRepository extends BaseRepository<PhieuMuonModel> {
                     rs.getInt("MaMuon"),
                     rs.getDate("NgayMuon"),
                     rs.getDate("NgayHetHan"),
-                    rs.getInt("MaDG")
+                    rs.getInt("MaDG"),
+                    rs.getInt("MaSach")
                 );
             }
         }, maMuon);
@@ -46,9 +47,12 @@ public class PhieuMuonRepository extends BaseRepository<PhieuMuonModel> {
                     rs.getInt("MaMuon"),
                     rs.getDate("NgayMuon"),
                     rs.getDate("NgayHetHan"),
-                    rs.getInt("MaDG")
+                    rs.getInt("MaDG"),
+                    rs.getInt("MaSach")
                 );
             }
         });
     }
+    
+    
 }

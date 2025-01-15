@@ -9,7 +9,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import bookstore.controller.ChiTietPhieuMuonController;
-import bookstore.share.MenuBarAdmin;
 
 public class QuanLyChiTietPhieuMuonView extends JFrame {
 
@@ -49,10 +48,6 @@ public class QuanLyChiTietPhieuMuonView extends JFrame {
         contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
         contentPane.setLayout(new BorderLayout(10, 10));
         setContentPane(contentPane);
-        
-     // Tích hợp MenuBarAdmin
-     		MenuBarAdmin menuBarAdmin = new MenuBarAdmin();
-     		setJMenuBar(menuBarAdmin);
 
         // Tiêu đề "Quản lý chi tiết phiếu mượn"
         JLabel lblTitle = new JLabel("Quản Lý Chi Tiết Phiếu Mượn", JLabel.CENTER);
@@ -97,12 +92,7 @@ public class QuanLyChiTietPhieuMuonView extends JFrame {
         txtTienPhat = new JTextField();
         formPanel.add(txtTienPhat);
 
-        // Panel chứa các nút
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new GridLayout(1, 3, 10, 10));
-        contentPane.add(buttonPanel, BorderLayout.SOUTH);
-
-        // Nút Thêm
+        // Nút Thêm và Xóa
         JButton btnThem = new JButton("Thêm");
         btnThem.addActionListener(new ActionListener() {
             @Override
@@ -110,9 +100,8 @@ public class QuanLyChiTietPhieuMuonView extends JFrame {
                 addChiTietPhieuMuon();
             }
         });
-        buttonPanel.add(btnThem);
+        formPanel.add(btnThem);
 
-        // Nút Xóa
         JButton btnXoa = new JButton("Xóa");
         btnXoa.addActionListener(new ActionListener() {
             @Override
@@ -120,21 +109,10 @@ public class QuanLyChiTietPhieuMuonView extends JFrame {
                 deleteChiTietPhieuMuon();
             }
         });
-        buttonPanel.add(btnXoa);
-
-        // Nút Sửa
-        JButton btnSua = new JButton("Sửa");
-        btnSua.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                updateChiTietPhieuMuon();
-            }
-        });
-        buttonPanel.add(btnSua);
+        formPanel.add(btnXoa);
 
         // Bảng hiển thị danh sách chi tiết phiếu mượn
-        tableModel = new DefaultTableModel(
-                new Object[] { "Mã Chi Tiết", "Mã Mượn", "Mã Sách", "Ngày Trả", "Tiền Phạt" }, 0);
+        tableModel = new DefaultTableModel(new Object[]{"Mã Chi Tiết", "Mã Mượn", "Mã Sách", "Ngày Trả", "Tiền Phạt"}, 0);
         table = new JTable(tableModel);
         table.setRowHeight(25);
         table.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -173,23 +151,15 @@ public class QuanLyChiTietPhieuMuonView extends JFrame {
         }
     }
 
-    private void updateChiTietPhieuMuon() {
-        int maChiTiet = Integer.parseInt(txtMaChiTiet.getText());
-        int maMuon = Integer.parseInt(txtMaMuon.getText());
-        int maSach = Integer.parseInt(txtMaSach.getText());
-        Date ngayTra = Date.valueOf(txtNgayTra.getText());
-        float tienPhat = txtTienPhat.getText().isEmpty() ? 0 : Float.parseFloat(txtTienPhat.getText());
-
-        chiTietPhieuMuonController.updateChiTietPhieuMuon(maChiTiet, maMuon, maSach, ngayTra, tienPhat);
-        displayAllChiTietPhieuMuon();
-    }
-
     private void displayAllChiTietPhieuMuon() {
         tableModel.setRowCount(0); // Clear existing rows
         chiTietPhieuMuonController.getAllChiTietPhieuMuon().forEach(chiTietPhieuMuon -> {
-            tableModel.addRow(new Object[] { chiTietPhieuMuon.getMaChiTiet(), chiTietPhieuMuon.getMaMuon(),
-                    chiTietPhieuMuon.getMaSach(), chiTietPhieuMuon.getNgayTra(),
-                    chiTietPhieuMuon.getTienPhat() == null ? "" : chiTietPhieuMuon.getTienPhat() });
+            tableModel.addRow(new Object[]{
+                chiTietPhieuMuon.getMaChiTiet(),
+                chiTietPhieuMuon.getMaMuon(),
+                chiTietPhieuMuon.getNgayTra(),
+                chiTietPhieuMuon.getTienPhat() == null ? "" : chiTietPhieuMuon.getTienPhat()
+            });
         });
     }
 
@@ -200,8 +170,7 @@ public class QuanLyChiTietPhieuMuonView extends JFrame {
             txtMaMuon.setText(tableModel.getValueAt(selectedRow, 1).toString());
             txtMaSach.setText(tableModel.getValueAt(selectedRow, 2).toString());
             txtNgayTra.setText(tableModel.getValueAt(selectedRow, 3).toString());
-            txtTienPhat.setText(tableModel.getValueAt(selectedRow, 4) == null ? ""
-                    : tableModel.getValueAt(selectedRow, 4).toString());
+            txtTienPhat.setText(tableModel.getValueAt(selectedRow, 4) == null ? "" : tableModel.getValueAt(selectedRow, 4).toString());
         }
     }
 

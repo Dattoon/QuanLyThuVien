@@ -17,7 +17,8 @@ public class QuanLyPhieuMuonView extends JFrame {
     private JTextField txtMaMuon;
     private JFormattedTextField txtNgayMuon;
     private JTextField txtNgayHetHan;
-    private JTextField txtMaDG;
+    private JTextField txtMaThe;
+    private JTextField txtMaSach;
     private JTable table;
     private DefaultTableModel tableModel;
     private PhieuMuonController phieuMuonController;
@@ -46,10 +47,10 @@ public class QuanLyPhieuMuonView extends JFrame {
         contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
         contentPane.setLayout(new BorderLayout(10, 10));
         setContentPane(contentPane);
-        
-     // Tích hợp MenuBarAdmin
-     		MenuBarAdmin menuBarAdmin = new MenuBarAdmin();
-     		setJMenuBar(menuBarAdmin);
+
+        // Tích hợp MenuBarAdmin
+        MenuBarAdmin menuBarAdmin = new MenuBarAdmin();
+        setJMenuBar(menuBarAdmin);
 
         // Tiêu đề "Quản lý phiếu mượn"
         JLabel lblTitle = new JLabel("Quản Lý Phiếu Mượn", JLabel.CENTER);
@@ -58,7 +59,7 @@ public class QuanLyPhieuMuonView extends JFrame {
 
         // Panel chứa các trường nhập liệu
         JPanel formPanel = new JPanel();
-        formPanel.setLayout(new GridLayout(5, 2, 10, 10));
+        formPanel.setLayout(new GridLayout(6, 2, 10, 10));
         contentPane.add(formPanel, BorderLayout.WEST);
 
         // Mã mượn
@@ -81,11 +82,17 @@ public class QuanLyPhieuMuonView extends JFrame {
         txtNgayHetHan.setEditable(false);
         formPanel.add(txtNgayHetHan);
 
-        // Mã ĐG
-        JLabel lblMaDG = new JLabel("Mã ĐG:");
-        formPanel.add(lblMaDG);
-        txtMaDG = new JTextField();
-        formPanel.add(txtMaDG);
+        // Mã Thẻ
+        JLabel lblMaThe = new JLabel("Mã Thẻ:");
+        formPanel.add(lblMaThe);
+        txtMaThe = new JTextField();
+        formPanel.add(txtMaThe);
+
+        // Mã Sách
+        JLabel lblMaSach = new JLabel("Mã Sách:");
+        formPanel.add(lblMaSach);
+        txtMaSach = new JTextField();
+        formPanel.add(txtMaSach);
 
         // Nút Thêm và Xóa
         JButton btnThem = new JButton("Thêm");
@@ -107,7 +114,7 @@ public class QuanLyPhieuMuonView extends JFrame {
         formPanel.add(btnXoa);
 
         // Bảng hiển thị danh sách phiếu mượn
-        tableModel = new DefaultTableModel(new Object[]{"Mã Mượn", "Ngày Mượn", "Ngày Hết Hạn", "Mã ĐG"}, 0);
+        tableModel = new DefaultTableModel(new Object[]{"Mã Mượn", "Ngày Mượn", "Ngày Hết Hạn", "Mã Thẻ", "Mã Sách"}, 0);
         table = new JTable(tableModel);
         table.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -122,10 +129,11 @@ public class QuanLyPhieuMuonView extends JFrame {
     }
 
     private void addPhieuMuon() {
-        int maDG = Integer.parseInt(txtMaDG.getText());
+        String maThe = txtMaThe.getText();
         Date ngayMuon = Date.valueOf(txtNgayMuon.getText());
+        int maSach = Integer.parseInt(txtMaSach.getText());
 
-        phieuMuonController.createPhieuMuon(maDG, ngayMuon);
+        phieuMuonController.createPhieuMuon(maThe, maSach);
         displayAllPhieuMuon();
     }
 
@@ -141,12 +149,8 @@ public class QuanLyPhieuMuonView extends JFrame {
     private void displayAllPhieuMuon() {
         tableModel.setRowCount(0); // Clear existing rows
         phieuMuonController.getAllPhieuMuon().forEach(phieuMuon -> {
-            tableModel.addRow(new Object[]{
-                phieuMuon.getMaMuon(),
-                phieuMuon.getNgayMuon(),
-                phieuMuon.getNgayHetHan(),
-                phieuMuon.getMaDG()
-            });
+            tableModel.addRow(new Object[]{phieuMuon.getMaMuon(), phieuMuon.getNgayMuon(), phieuMuon.getNgayHetHan(),
+                    phieuMuon.getMaDG(), phieuMuon.getMaSach()});
         });
     }
 
@@ -156,7 +160,8 @@ public class QuanLyPhieuMuonView extends JFrame {
             txtMaMuon.setText(tableModel.getValueAt(selectedRow, 0).toString());
             txtNgayMuon.setText(tableModel.getValueAt(selectedRow, 1).toString());
             txtNgayHetHan.setText(tableModel.getValueAt(selectedRow, 2).toString());
-            txtMaDG.setText(tableModel.getValueAt(selectedRow, 3).toString());
+            txtMaThe.setText(tableModel.getValueAt(selectedRow, 3).toString());
+            txtMaSach.setText(tableModel.getValueAt(selectedRow, 4).toString());
         }
     }
 }

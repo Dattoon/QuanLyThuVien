@@ -10,6 +10,7 @@ import bookstore.controller.LayoutAdminController;
 import bookstore.share.MenuBarAdmin; // Import lớp MenuBarAdmin
 import bookstore.view.DangKyDocGia;
 import bookstore.view.GiaHanTheView;
+import bookstore.view.MuonSachView;
 import bookstore.view.QuanLyPhieuMuonView;
 
 public class LayoutAdmin extends JFrame {
@@ -21,7 +22,6 @@ public class LayoutAdmin extends JFrame {
 
 	public LayoutAdmin() {
 		layoutAdminController = new LayoutAdminController();
-
 		// Thiết lập JFrame
 		setTitle("Layout Admin");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -110,7 +110,7 @@ public class LayoutAdmin extends JFrame {
 		buttonPanel.add(btnOption1, gbc_btnOption1);
 		btnOption1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new QuanLyPhieuMuonView().setVisible(true);
+				new MuonSachView().setVisible(true);
 			}
 		});
 
@@ -160,7 +160,6 @@ public class LayoutAdmin extends JFrame {
 	}
 
 	public static void main(String[] args) {
-		
 		EventQueue.invokeLater(() -> {
 			try {
 				LayoutAdmin frame = new LayoutAdmin();

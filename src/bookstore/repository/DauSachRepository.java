@@ -11,6 +11,7 @@ public class DauSachRepository extends BaseRepository<DauSachModel> {
     private static final String DELETE_QUERY = "DELETE FROM DauSach WHERE MaSach = ?";
     private static final String SELECT_QUERY = "SELECT * FROM DauSach WHERE MaSach = ?";
     private static final String SELECT_ALL_QUERY = "SELECT * FROM DauSach";
+    private static final String SELECT_TUA_SACH_BY_MA_SACH = "SELECT TuaSach FROM DauSach WHERE MaSach = ?";
 
     public int addDauSach(DauSachModel dauSach) throws SQLException {
         int maSach = 0;
@@ -70,5 +71,27 @@ public class DauSachRepository extends BaseRepository<DauSachModel> {
                 );
             }
         });
+    }
+
+    public void decrementSL(int maSach) throws SQLException {
+        String query = "UPDATE DauSach SET SL = SL - 1 WHERE MaSach = ?";
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, maSach);
+            stmt.executeUpdate();
+        }
+    }
+
+    public String getTuaSachByMaSach(int maSach) throws SQLException {
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(SELECT_TUA_SACH_BY_MA_SACH)) {
+            stmt.setInt(1, maSach);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getString("TuaSach");
+                }
+            }
+        }
+        return null;
     }
 }
