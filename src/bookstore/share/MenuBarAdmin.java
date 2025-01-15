@@ -1,8 +1,19 @@
 package bookstore.share;
 
 import javax.swing.JMenuBar;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+
+import bookstore.view.GiaHanTheView;
+import bookstore.view.NgonNguView;
+import bookstore.view.ViTriSachView;
+import bookstore.view.Admin.QuanlyDauSach;
+import bookstore.view.Admin.QuanlyDocGia;
+import bookstore.view.Admin.QuanlyTacGia;
 
 public class MenuBarAdmin extends JMenuBar {
 
@@ -25,16 +36,52 @@ public class MenuBarAdmin extends JMenuBar {
         // "Quản lý sách" menu with sub-items
         JMenu manageBooksMenu = new JMenu("Quản lý sách");
         JMenuItem manageBooksItem1 = new JMenuItem("Đầu sách");
+        
+        manageBooksItem1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new QuanlyDauSach().setVisible(true);
+			}
+		});
         manageBooksMenu.add(manageBooksItem1);
+        
+        
         JMenuItem manageBooksItem2 = new JMenuItem("Ngôn ngữ");
+        manageBooksItem2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new NgonNguView().setVisible(true);
+			}
+		});
         manageBooksMenu.add(manageBooksItem2);
+        
+        
+        
         JMenuItem manageBooksItem3 = new JMenuItem("Tác giả");
+        manageBooksItem3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new QuanlyTacGia().setVisible(true);
+			}
+		});
         manageBooksMenu.add(manageBooksItem3);
+        
+        JMenuItem manageBooksItem4 = new JMenuItem("Vị Trí");
+        manageBooksItem4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new ViTriSachView().setVisible(true);
+			}
+		});
+        manageBooksMenu.add(manageBooksItem2);
+
+        
         statsMenu.add(manageBooksMenu);
 
         // "Quản lý độc giả" item
         JMenuItem manageReadersItem = new JMenuItem("Quản lý độc giả");
         statsMenu.add(manageReadersItem);
+        manageReadersItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new QuanlyDocGia().setVisible(true);
+			}
+		});
 
         this.add(statsMenu);
 

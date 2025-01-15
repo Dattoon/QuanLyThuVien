@@ -20,6 +20,7 @@ public class ChiTietPhieuMuonController {
         ChiTietPhieuMuonModel chiTietPhieuMuon = new ChiTietPhieuMuonModel(0, maMuon, maSach, ngayTra, tienPhat);
         try {
             chiTietPhieuMuonRepository.addChiTietPhieuMuon(chiTietPhieuMuon);
+            calculateAndUpdateFine(maMuon, ngayTra); // Calculate and update fine when creating a new loan detail
             JOptionPane.showMessageDialog(null, "Tạo chi tiết phiếu mượn thành công!");
         } catch (SQLException e) {
             e.printStackTrace();
@@ -31,6 +32,7 @@ public class ChiTietPhieuMuonController {
         ChiTietPhieuMuonModel chiTietPhieuMuon = new ChiTietPhieuMuonModel(maChiTiet, maMuon, maSach, ngayTra, tienPhat);
         try {
             chiTietPhieuMuonRepository.updateChiTietPhieuMuon(chiTietPhieuMuon);
+            calculateAndUpdateFine(maMuon, ngayTra); // Calculate and update fine when updating a loan detail
             JOptionPane.showMessageDialog(null, "Cập nhật chi tiết phiếu mượn thành công!");
         } catch (SQLException e) {
             e.printStackTrace();
@@ -72,6 +74,35 @@ public class ChiTietPhieuMuonController {
         } catch (SQLException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Có lỗi xảy ra trong quá trình xóa chi tiết phiếu mượn.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void calculateAndUpdateFine(int maMuon, Date ngayTra) {
+        try {
+            // Get the due date from phieumuon table
+            Date ngayHetHan = chiTietPhieuMuonRepository.getNgayHetHan(maMuon);
+            if (ngayHetHan != null && ngayTra != null) {
+                long daysLate = (ngayTra.getTime() - ngayHetHan.getTime()) / (1000 * 60 * 60 * 24);
+                float fineAmount = 0;
+                if (daysLate > 0) {
+                    fineAmount = daysLate * 2000; // Fine amount: 5000 per day after the first day
+                }
+
+                chiTietPhieuMuonRepository.updateTienPhat(maMuon, fineAmount);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateAllFines() {
+        try {
+            List<ChiTietPhieuMuonModel> allChiTietPhieuMuon = getAllChiTietPhieuMuon();
+            for (ChiTietPhieuMuonModel chiTietPhieuMuon : allChiTietPhieuMuon) {
+                calculateAndUpdateFine(chiTietPhieuMuon.getMaMuon(), chiTietPhieuMuon.getNgayTra());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

@@ -7,17 +7,16 @@ public class ChiTietPhieuMuonModel {
     private int maMuon;
     private int maSach;
     private Date ngayTra;
-    private float tienPhat;
+    private Float tienPhat;
 
-    public ChiTietPhieuMuonModel(int maChiTiet, int maMuon, int maSach, Date ngayTra, float tienPhat) {
+    public ChiTietPhieuMuonModel(int maChiTiet, int maMuon, int maSach, Date ngayTra, Float tienPhat) {
         this.maChiTiet = maChiTiet;
-        this.tienPhat = tienPhat;
         this.maMuon = maMuon;
         this.maSach = maSach;
         this.ngayTra = ngayTra;
+        this.tienPhat = tienPhat;
     }
 
-    // Getters and setters
     public int getMaChiTiet() {
         return maChiTiet;
     }
@@ -25,7 +24,6 @@ public class ChiTietPhieuMuonModel {
     public void setMaChiTiet(int maChiTiet) {
         this.maChiTiet = maChiTiet;
     }
-
 
     public int getMaMuon() {
         return maMuon;
@@ -50,12 +48,12 @@ public class ChiTietPhieuMuonModel {
     public void setNgayTra(Date ngayTra) {
         this.ngayTra = ngayTra;
     }
-    public float getTienPhat()
-    {
-    	return tienPhat;
+
+    public Float getTienPhat() {
+        return tienPhat;
     }
-    public void settienPhat(float tienPhat) {
-    	this.tienPhat = tienPhat;
+
+    public void setTienPhat(Float tienPhat) {
+        this.tienPhat = tienPhat;
     }
-    
 }

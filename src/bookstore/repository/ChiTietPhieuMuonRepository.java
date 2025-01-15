@@ -12,6 +12,8 @@ public class ChiTietPhieuMuonRepository extends BaseRepository<ChiTietPhieuMuonM
     private static final String SELECT_QUERY = "SELECT * FROM ChiTietPhieuMuon WHERE MaChiTiet = ?";
     private static final String SELECT_ALL_QUERY = "SELECT * FROM ChiTietPhieuMuon";
     private static final String SELECT_BY_MA_MUON_QUERY = "SELECT * FROM ChiTietPhieuMuon WHERE MaMuon = ?";
+    private static final String GET_NGAY_HET_HAN_QUERY = "SELECT NgayHetHan FROM phieumuon WHERE MaMuon = ?";
+    private static final String UPDATE_TIEN_PHAT_QUERY = "UPDATE ChiTietPhieuMuon SET TienPhat = ? WHERE MaMuon = ?";
 
     public void addChiTietPhieuMuon(ChiTietPhieuMuonModel chiTietPhieuMuon) throws SQLException {
         add(INSERT_QUERY, chiTietPhieuMuon.getMaMuon(), chiTietPhieuMuon.getMaSach(), chiTietPhieuMuon.getNgayTra(), chiTietPhieuMuon.getTienPhat());
@@ -68,5 +70,30 @@ public class ChiTietPhieuMuonRepository extends BaseRepository<ChiTietPhieuMuonM
                 );
             }
         }, maMuon);
+    }
+
+    public Date getNgayHetHan(int maMuon) throws SQLException {
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(GET_NGAY_HET_HAN_QUERY)) {
+            ps.setInt(1, maMuon);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getDate("NgayHetHan");
+                }
+            }
+        }
+        return null;
+    }
+    public void updateTienPhat(int maMuon, float tienPhat) throws SQLException {
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(UPDATE_TIEN_PHAT_QUERY)) {
+            if (tienPhat == 0) {
+                ps.setNull(1, Types.FLOAT);
+            } else {
+                ps.setFloat(1, tienPhat);
+            }
+            ps.setInt(2, maMuon);
+            ps.executeUpdate();
+        }
     }
 }
