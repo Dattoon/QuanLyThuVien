@@ -91,12 +91,13 @@ public class DauSachController {
     public List<String> getAllNgonNguNames() throws SQLException {
         return ngonNguRepository.getAllNgonNguNames();
     }
+
     public String getTenNgonNgu(int maNN) {
         try {
             return ngonNguRepository.getTenNgonNguById(maNN);
         } catch (SQLException e) {
             e.printStackTrace();
-            return null; // Trả về null nếu xảy ra lỗi
+            return null;
         }
     }
 
@@ -106,19 +107,18 @@ public class DauSachController {
             if (viTri != null) {
                 return String.format("Khu: %s, Kệ: %s, Ngăn: %s", viTri.getKhu(), viTri.getKe(), viTri.getNgan());
             }
-            return null; // Trả về null nếu không tìm thấy vị trí
+            return null;
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
         }
     }
 
-
     public List<String> getAllViTri() throws SQLException {
         List<ViTriModel> viTriModels = viTriRepository.getAllViTri();
-		return viTriModels.stream()
-		        .map(vt -> String.format("Khu: %s, Kệ: %s, Ngăn: %s", vt.getKhu(), vt.getKe(), vt.getNgan()))
-		        .collect(Collectors.toList());
+        return viTriModels.stream()
+                .map(vt -> String.format("Khu: %s, Kệ: %s, Ngăn: %s", vt.getKhu(), vt.getKe(), vt.getNgan()))
+                .collect(Collectors.toList());
     }
 
     public List<String> getAllTacGiaNames() {

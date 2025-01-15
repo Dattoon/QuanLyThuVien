@@ -1,7 +1,6 @@
 package bookstore.repository;
 
 import bookstore.model.TacGiaModel;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -41,6 +40,7 @@ public class TacGiaRepository extends BaseRepository<TacGiaModel> {
                 resultSet.getString("DiaChiTG")
         ), maSach);
     }
+
     public List<String> getAllTacGiaNames() throws SQLException {
         String query = "SELECT TenTG FROM TacGia";
         List<String> names = new ArrayList<>();
@@ -53,5 +53,4 @@ public class TacGiaRepository extends BaseRepository<TacGiaModel> {
         }
         return names;
     }
-
 }
