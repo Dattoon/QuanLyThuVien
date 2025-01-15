@@ -1,19 +1,18 @@
 package bookstore.view.Admin;
 
 import java.util.List;
-
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
-import java.awt.event.ActionListener;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import bookstore.controller.TacGiaController;
 import bookstore.model.TacGiaModel;
 
 public class QuanlyTacGia extends JFrame {
-
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTable tableTacGia;
@@ -36,7 +35,6 @@ public class QuanlyTacGia extends JFrame {
 
 	public QuanlyTacGia() {
 		tacGiaController = new TacGiaController(); // Initialize controller
-
 		setTitle("Quản Lý Tác Giả");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 600);
@@ -65,14 +63,11 @@ public class QuanlyTacGia extends JFrame {
 		JPanel formPanel = new JPanel();
 		formPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 		centerPanel.add(formPanel, BorderLayout.NORTH);
-
 		JLabel lblMaTG = new JLabel("Mã Tác Giả:");
 		txtMaTG = new JTextField();
 		txtMaTG.setEditable(false);
-
 		JLabel lblTenTG = new JLabel("Tên Tác Giả:");
 		txtTenTG = new JTextField();
-
 		JLabel lblDiaChiTG = new JLabel("Địa Chỉ:");
 		txtDiaChiTG = new JTextField();
 		GroupLayout gl_formPanel = new GroupLayout(formPanel);
@@ -80,11 +75,9 @@ public class QuanlyTacGia extends JFrame {
 				.createSequentialGroup()
 				.addGroup(gl_formPanel.createParallelGroup(Alignment.TRAILING, false)
 						.addComponent(lblDiaChiTG, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addGroup(Alignment.LEADING, gl_formPanel.createParallelGroup(Alignment.TRAILING, false)
-								.addComponent(lblTenTG, Alignment.LEADING, GroupLayout.DEFAULT_SIZE,
-										GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(lblMaTG, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 96,
-										Short.MAX_VALUE)))
+						.addComponent(lblTenTG, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE,
+								Short.MAX_VALUE)
+						.addComponent(lblMaTG, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE))
 				.addPreferredGap(ComponentPlacement.RELATED)
 				.addGroup(gl_formPanel.createParallelGroup(Alignment.LEADING, false).addComponent(txtDiaChiTG)
 						.addComponent(txtTenTG)
@@ -108,38 +101,34 @@ public class QuanlyTacGia extends JFrame {
 										GroupLayout.PREFERRED_SIZE))
 						.addContainerGap()));
 		formPanel.setLayout(gl_formPanel);
+
 		// Table Panel
 		JPanel tablePanel = new JPanel();
-		centerPanel.add(tablePanel, BorderLayout.SOUTH);
-
-		// Create DefaultTableModel with column names for TacGia table
+		centerPanel.add(tablePanel, BorderLayout.CENTER);
 		tableModel = new DefaultTableModel();
 		tableModel.addColumn("Mã Tác Giả");
 		tableModel.addColumn("Tên Tác Giả");
 		tableModel.addColumn("Địa Chỉ");
-
 		tableTacGia = new JTable(tableModel);
 		tableTacGia.setRowHeight(30);
 		tableTacGia.setFont(new Font("Arial", Font.PLAIN, 14));
 		JScrollPane scrollPane = new JScrollPane(tableTacGia);
-
+		tablePanel.setLayout(new BorderLayout());
+		tablePanel.add(scrollPane, BorderLayout.CENTER);
 		// Footer panel (buttons)
 		JPanel footerPanel = new JPanel();
 		footerPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
 		footerPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
-
 		JButton btnThem = new JButton("Thêm");
 		btnThem.setFont(new Font("Arial", Font.BOLD, 14));
 		btnThem.setBackground(new Color(34, 139, 34));
 		btnThem.setForeground(Color.WHITE);
 		footerPanel.add(btnThem);
-
 		JButton btnSua = new JButton("Sửa");
 		btnSua.setFont(new Font("Arial", Font.BOLD, 14));
 		btnSua.setBackground(new Color(255, 140, 0));
 		btnSua.setForeground(Color.WHITE);
 		footerPanel.add(btnSua);
-
 		JButton btnXoa = new JButton("Xóa");
 		btnXoa.setFont(new Font("Arial", Font.BOLD, 14));
 		btnXoa.setBackground(new Color(220, 20, 60));
@@ -153,85 +142,85 @@ public class QuanlyTacGia extends JFrame {
 		btnBack.setForeground(Color.WHITE);
 		footerPanel.add(btnBack);
 
-		// Add Action Listeners for buttons
-//		btnThem.addActionListener(e -> addRow());
-		btnSua.addActionListener(e -> editRow());
-		btnXoa.addActionListener(e -> deleteRow());
-		btnBack.addActionListener(e -> goBack());
+		centerPanel.add(footerPanel, BorderLayout.SOUTH);
 
-		GroupLayout gl_tablePanel = new GroupLayout(tablePanel);
-		gl_tablePanel
-				.setHorizontalGroup(
-						gl_tablePanel.createParallelGroup(Alignment.LEADING)
-								.addGroup(gl_tablePanel.createSequentialGroup()
-										.addComponent(footerPanel, GroupLayout.PREFERRED_SIZE, 814,
-												GroupLayout.PREFERRED_SIZE)
-										.addContainerGap(20, Short.MAX_VALUE))
-								.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 834, Short.MAX_VALUE));
-		gl_tablePanel.setVerticalGroup(gl_tablePanel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_tablePanel.createSequentialGroup().addGap(38)
-						.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 242, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED).addComponent(footerPanel,
-								GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addContainerGap(71, Short.MAX_VALUE)));
-		tablePanel.setLayout(gl_tablePanel);
-
-		// Populate the JTable with data
-		populateTacGiaTable();
-
-		// Add MouseListener to table for row selection
-		tableTacGia.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseClicked(java.awt.event.MouseEvent evt) {
-				displaySelectedRow();
+		// Button actions
+		btnThem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				addRow();
 			}
 		});
+		btnSua.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				editRow();
+			}
+		});
+		btnXoa.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				deleteRow();
+			}
+		});
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				goBack();
+			}
+		});
+
+		// Table selection
+		tableTacGia.getSelectionModel().addListSelectionListener(event -> {
+			if (tableTacGia.getSelectedRow() != -1) {
+				int selectedRow = tableTacGia.getSelectedRow();
+				txtMaTG.setText(tableModel.getValueAt(selectedRow, 0).toString());
+				txtTenTG.setText(tableModel.getValueAt(selectedRow, 1).toString());
+				txtDiaChiTG.setText(tableModel.getValueAt(selectedRow, 2).toString());
+			}
+		});
+		// Load initial data
+		loadTacGiaData();
 	}
 
-	// Populate JTable with data from the database
-	private void populateTacGiaTable() {
-//		tacGiaController.populateTacGiaTable(tableTacGia);
+	private void loadTacGiaData() {
+		List<TacGiaModel> tacGiaList = tacGiaController.getAllTacGia();
+		tableModel.setRowCount(0); // Clear existing rows
+		if (tacGiaList != null) {
+			for (TacGiaModel tacGia : tacGiaList) {
+				tableModel.addRow(new Object[] { tacGia.getMaTG(), tacGia.getTenTG(), tacGia.getDiaChiTG() });
+			}
+		}
 	}
 
-	// Method to add a row
-	// Method to add a row
-//	private void addRow() {
-//		// Lấy dữ liệu từ các trường nhập liệu
-//		String tenTG = txtTenTG.getText().trim();
-//		String diaChiTG = txtDiaChiTG.getText().trim();
-//
-//		// Kiểm tra dữ liệu đầu vào
-//		if (tenTG.isEmpty() || diaChiTG.isEmpty()) {
-//			JOptionPane.showMessageDialog(this, "Vui lòng điền đầy đủ thông tin tác giả.");
-//			return;
-//		}
-//
-//		boolean isAdded = tacGiaController.addTacGia(tenTG, diaChiTG);
-//		if (isAdded) {
-//			JOptionPane.showMessageDialog(this, "Thêm tác giả thành công.");
-//			populateTacGiaTable();
-//			clearTextFields();
-//		} else {
-//			JOptionPane.showMessageDialog(this, "Có lỗi trong quá trình thêm tác giả.");
-//		}
-//	}
+	private void addRow() {
+		// Lấy dữ liệu từ các trường nhập liệu
+		String tenTG = txtTenTG.getText().trim();
+		String diaChiTG = txtDiaChiTG.getText().trim();
+		// Kiểm tra dữ liệu đầu vào
+		if (tenTG.isEmpty() || diaChiTG.isEmpty()) {
+			JOptionPane.showMessageDialog(this, "Vui lòng điền đầy đủ thông tin tác giả.");
+			return;
+		}
+		int newId = tacGiaController.addTacGia(tenTG, diaChiTG);
+		if (newId > 0) {
+			JOptionPane.showMessageDialog(this, "Thêm tác giả thành công.");
+			tableModel.addRow(new Object[] { newId, tenTG, diaChiTG });
+			clearTextFields();
+		} else {
+			JOptionPane.showMessageDialog(this, "Có lỗi trong quá trình thêm tác giả.");
+		}
+	}
 
-	// Method to edit a selected row
 	private void editRow() {
 		int selectedRow = tableTacGia.getSelectedRow();
 		if (selectedRow == -1) {
 			JOptionPane.showMessageDialog(this, "Vui lòng chọn dòng cần sửa.");
 			return;
 		}
-
 		String maTGStr = txtMaTG.getText().trim();
 		String tenTG = txtTenTG.getText().trim();
 		String diaChiTG = txtDiaChiTG.getText().trim();
-
 		if (maTGStr.isEmpty() || tenTG.isEmpty() || diaChiTG.isEmpty()) {
 			JOptionPane.showMessageDialog(this, "Vui lòng điền đầy đủ thông tin tác giả.");
 			return;
 		}
-
 		int maTG;
 		try {
 			maTG = Integer.parseInt(maTGStr);
@@ -239,37 +228,33 @@ public class QuanlyTacGia extends JFrame {
 			JOptionPane.showMessageDialog(this, "Mã tác giả phải là số.");
 			return;
 		}
-
 		boolean isUpdated = tacGiaController.updateTacGia(maTG, tenTG, diaChiTG);
 		if (isUpdated) {
 			JOptionPane.showMessageDialog(this, "Sửa tác giả thành công.");
-			populateTacGiaTable();
+			loadTacGiaData();
 			clearTextFields();
 		} else {
 			JOptionPane.showMessageDialog(this, "Có lỗi trong quá trình sửa tác giả.");
 		}
 	}
 
-	// Method to delete a selected row
 	private void deleteRow() {
 		int selectedRow = tableTacGia.getSelectedRow();
 		if (selectedRow == -1) {
 			JOptionPane.showMessageDialog(this, "Vui lòng chọn dòng cần xóa.");
 			return;
 		}
-
 		int maTG = (int) tableModel.getValueAt(selectedRow, 0);
 		boolean isDeleted = tacGiaController.deleteTacGia(maTG);
 		if (isDeleted) {
 			JOptionPane.showMessageDialog(this, "Xóa thành công.");
-			populateTacGiaTable();
+			loadTacGiaData();
 			clearTextFields();
 		} else {
 			JOptionPane.showMessageDialog(this, "Có lỗi trong quá trình xóa.");
 		}
 	}
 
-	// Method to display selected row's data in text fields
 	private void displaySelectedRow() {
 		int selectedRow = tableTacGia.getSelectedRow();
 		if (selectedRow != -1) {
@@ -279,31 +264,13 @@ public class QuanlyTacGia extends JFrame {
 		}
 	}
 
-	// Method to clear text fields
 	private void clearTextFields() {
 		txtMaTG.setText("");
 		txtTenTG.setText("");
+		txtTenTG.setText("");
 		txtDiaChiTG.setText("");
+		tableTacGia.clearSelection();
 	}
-
-	// Method to search rows based on input
-//	private void searchRows(String keyword) {
-//		if (keyword.isEmpty()) {
-//			JOptionPane.showMessageDialog(this, "Vui lòng nhập từ khóa tìm kiếm.");
-//			return;
-//		}
-//
-//		List<TacGiaModel> tacGiaList = tacGiaController.searchTacGia(keyword);
-//		if (tacGiaList == null) {
-//			JOptionPane.showMessageDialog(this, "Không tìm thấy tác giả nào.");
-//			return;
-//		}
-//
-//		tableModel.setRowCount(0); // Clear existing rows
-//		for (TacGiaModel tg : tacGiaList) {
-//			tableModel.addRow(new Object[] { tg.getMaTG(), tg.getTenTG(), tg.getDiaChiTG() });
-//		}
-//	}
 
 	// Back button functionality (close current window)
 	private void goBack() {
