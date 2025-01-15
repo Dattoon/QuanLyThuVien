@@ -56,7 +56,7 @@ public class MenuBarAdmin extends JMenuBar {
         
         
         JMenuItem manageBooksItem3 = new JMenuItem("Tác giả");
-        manageBooksItem1.addActionListener(new ActionListener() {
+        manageBooksItem3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new QuanlyTacGia().setVisible(true);
 			}
