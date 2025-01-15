@@ -160,6 +160,7 @@ public class LayoutAdmin extends JFrame {
 	}
 
 	public static void main(String[] args) {
+		
 		EventQueue.invokeLater(() -> {
 			try {
 				LayoutAdmin frame = new LayoutAdmin();

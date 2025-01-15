@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
+import bookstore.view.DauSachView;
 import bookstore.view.GiaHanTheView;
 import bookstore.view.NgonNguView;
 import bookstore.view.ViTriSachView;
@@ -39,7 +40,7 @@ public class MenuBarAdmin extends JMenuBar {
         
         manageBooksItem1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new QuanlyDauSach().setVisible(true);
+				new DauSachView().setVisible(true);
 			}
 		});
         manageBooksMenu.add(manageBooksItem1);
