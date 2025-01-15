@@ -37,15 +37,15 @@ public class QuanlyTacGia extends JFrame {
 	public QuanlyTacGia() {
 		tacGiaController = new TacGiaController(); // Initialize controller
 		setTitle("Quản Lý Tác Giả");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 800, 600);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 		// Tích hợp MenuBarAdmin
-				MenuBarAdmin menuBarAdmin = new MenuBarAdmin();
-				setJMenuBar(menuBarAdmin);
+		MenuBarAdmin menuBarAdmin = new MenuBarAdmin();
+		setJMenuBar(menuBarAdmin);
 
 		// Header panel
 		JPanel headerPanel = new JPanel();
@@ -137,6 +137,7 @@ public class QuanlyTacGia extends JFrame {
 		btnXoa.setFont(new Font("Arial", Font.BOLD, 14));
 		btnXoa.setBackground(new Color(220, 20, 60));
 		btnXoa.setForeground(Color.WHITE);
+		
 		footerPanel.add(btnXoa);
 
 		// Back Button
@@ -169,6 +170,7 @@ public class QuanlyTacGia extends JFrame {
 				goBack();
 			}
 		});
+		
 
 		// Table selection
 		tableTacGia.getSelectionModel().addListSelectionListener(event -> {

@@ -124,8 +124,9 @@ public class DocGiaRepository extends BaseRepository<DocGiaModel> {
     }
 
     public String getTenDGByMaDG(int maDG) throws SQLException {
+        String query = "SELECT TenDG FROM DocGia WHERE MaDG = ?";
         try (Connection conn = getConnection();
-             PreparedStatement stmt = conn.prepareStatement(SELECT_TEN_DG_BY_MA_DG)) {
+             PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setInt(1, maDG);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
@@ -135,4 +136,5 @@ public class DocGiaRepository extends BaseRepository<DocGiaModel> {
         }
         return null;
     }
+
 }

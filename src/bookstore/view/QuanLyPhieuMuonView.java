@@ -40,7 +40,7 @@ public class QuanLyPhieuMuonView extends JFrame {
         phieuMuonController = new PhieuMuonController();
 
         setTitle("Quản Lý Phiếu Mượn");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setBounds(100, 100, 800, 600);
 
         contentPane = new JPanel();

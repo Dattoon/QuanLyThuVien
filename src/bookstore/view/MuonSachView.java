@@ -35,7 +35,7 @@ public class MuonSachView extends JFrame {
         phieuMuonController = new PhieuMuonController();
 
         setTitle("Mượn Sách");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setBounds(100, 100, 400, 300);
 
         contentPane = new JPanel();

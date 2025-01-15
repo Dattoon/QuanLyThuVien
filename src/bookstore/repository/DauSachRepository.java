@@ -2,6 +2,7 @@ package bookstore.repository;
 
 import bookstore.model.DauSachModel;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DauSachRepository extends BaseRepository<DauSachModel> {
@@ -94,4 +95,34 @@ public class DauSachRepository extends BaseRepository<DauSachModel> {
         }
         return null;
     }
+    public void incrementSL(int maSach) throws SQLException {
+        String sql = "UPDATE DauSach SET SL = SL + 1 WHERE MaSach = ?";
+        try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, maSach);
+            pstmt.executeUpdate();
+        }
+    }
+    public List<DauSachModel> searchDauSachByKeyword(String keyword) throws SQLException {
+        List<DauSachModel> dauSachList = new ArrayList<>();
+        String sql = "SELECT * FROM DauSach WHERE TuaSach LIKE ?";
+        try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, "%" + keyword + "%");
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    DauSachModel dauSach = new DauSachModel(
+                            rs.getInt("MaSach"),
+                            rs.getString("TuaSach"),
+                            rs.getString("TomTat"),
+                            rs.getInt("SL"),
+                            rs.getInt("MaNN"),
+                            rs.getInt("MaVT")
+                    );
+                    dauSachList.add(dauSach);
+                }
+            }
+        }
+        return dauSachList;
+    }
+
+
 }

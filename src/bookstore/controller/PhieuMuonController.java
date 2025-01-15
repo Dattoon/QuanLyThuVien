@@ -112,5 +112,41 @@ public class PhieuMuonController {
             return null;
         }
     }
-    
+
+    public List<PhieuMuonModel> getPhieuMuonByMaThe(String maThe) {
+        try {
+            int maDG = docGiaRepository.getMaDGByMaThe(maThe); // Lấy MaDG từ MaThe
+            return phieuMuonRepository.getPhieuMuonByMaDG(maDG); // Lấy danh sách phiếu mượn theo MaDG
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public void returnBook(int maMuon, int maSach) {
+        try {
+            // Tăng số lượng sách
+            dauSachRepository.incrementSL(maSach);
+
+            // Xóa phiếu mượn dựa trên MaMuon
+            phieuMuonRepository.deletePhieuMuon(maMuon);
+
+            JOptionPane.showMessageDialog(null, "Trả sách thành công!");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Có lỗi xảy ra trong quá trình trả sách.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+
+    public void tangSoLuongSach(int maSach) {
+        try {
+            dauSachRepository.incrementSL(maSach); // Tăng số lượng sách trong kho
+            JOptionPane.showMessageDialog(null, "Cập nhật số lượng sách thành công!");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Có lỗi xảy ra trong quá trình cập nhật số lượng sách.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
 }

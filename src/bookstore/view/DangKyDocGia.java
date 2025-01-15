@@ -41,7 +41,7 @@ public class DangKyDocGia extends JFrame {
         docGiaController = new DocGiaController();
 
         setTitle("Đăng Ký Độc Giả");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setBounds(100, 100, 500, 400);
 
         contentPane = new JPanel();

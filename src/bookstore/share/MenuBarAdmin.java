@@ -13,8 +13,6 @@ import bookstore.view.GiaHanTheView;
 import bookstore.view.NgonNguView;
 import bookstore.view.QuanLyDocGiaView;
 import bookstore.view.ViTriSachView;
-import bookstore.view.Admin.QuanlyDauSach;
-import bookstore.view.Admin.QuanlyDocGia;
 import bookstore.view.Admin.QuanlyTacGia;
 
 public class MenuBarAdmin extends JMenuBar {

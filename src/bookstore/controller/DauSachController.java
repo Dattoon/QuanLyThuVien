@@ -132,4 +132,13 @@ public class DauSachController {
             return new ArrayList<>();
         }
     }
+    public List<DauSachModel> searchDauSachByKeyword(String keyword) {
+        try {
+            return dauSachRepository.searchDauSachByKeyword(keyword);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+
 }

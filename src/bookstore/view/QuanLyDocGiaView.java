@@ -43,7 +43,7 @@ public class QuanLyDocGiaView extends JFrame {
         docGiaController = new DocGiaController();
 
         setTitle("Quản Lý Độc Giả");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setBounds(100, 100, 900, 600);
 
         contentPane = new JPanel();
@@ -96,10 +96,12 @@ public class QuanLyDocGiaView extends JFrame {
 
         formPanel.add(new JLabel("Mã Thẻ:"));
         txtMaThe = new JTextField();
+        txtMaThe.setEditable(false);
         formPanel.add(txtMaThe);
 
         formPanel.add(new JLabel("Ngày Hết Hạn:"));
         txtNgayHetHan = new JFormattedTextField();
+        txtNgayHetHan.setEditable(false);
         formPanel.add(txtNgayHetHan);
 
         // Buttons
@@ -121,10 +123,11 @@ public class QuanLyDocGiaView extends JFrame {
         btnXoa.addActionListener(e -> deleteDocGia());
         buttonPanel.add(btnXoa);
 
-        JButton btnHienThi = new JButton("Hiển Thị");
-        btnHienThi.setBackground(new Color(204, 204, 204));
-        btnHienThi.addActionListener(e -> displayAllDocGia());
-        buttonPanel.add(btnHienThi);
+        JButton btnClear = new JButton("Clear");
+        btnClear.setBackground(new Color(204, 204, 204));
+        btnClear.addActionListener(e -> btnClear());
+        buttonPanel.add(btnClear);
+        
 
         formPanel.add(new JLabel());
         formPanel.add(buttonPanel);
@@ -154,7 +157,6 @@ public class QuanLyDocGiaView extends JFrame {
         Date ngaySinh = Date.valueOf(txtNgaySinh.getText());
         String diaChi = txtDiaChi.getText();
         String dienThoai = txtSoDienThoai.getText();
-        Date ngayHetHan = Date.valueOf(txtNgayHetHan.getText());
 
         docGiaController.registerDocGia(ten, ngaySinh, diaChi, dienThoai);
         displayAllDocGia();
@@ -211,5 +213,15 @@ public class QuanLyDocGiaView extends JFrame {
             txtMaThe.setText(tableModel.getValueAt(selectedRow, 5).toString());
             txtNgayHetHan.setText(tableModel.getValueAt(selectedRow, 6).toString());
         }
+    }
+    private void btnClear() {
+    	txtMaDG.setText("");
+    	txtTenDocGia.setText("");
+    	txtNgaySinh.setText("");
+    	txtDiaChi.setText("");
+    	txtSoDienThoai.setText("");
+    	txtMaThe.setText("");
+    	txtNgayHetHan.setText("");
+    	
     }
 }

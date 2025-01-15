@@ -28,6 +28,8 @@ public class DauSachView extends JFrame {
 
 	private JTable table;
 	private DefaultTableModel tableModel;
+	private JTextField txtSearch;
+	private JButton btnSearch;
 
 	private JTextField txtTuaSach;
 	private JTextArea txtTomTat;
@@ -61,7 +63,7 @@ public class DauSachView extends JFrame {
 	 * Create the frame.
 	 */
 	public DauSachView() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -77,74 +79,82 @@ public class DauSachView extends JFrame {
 
 	}
 
-	private void initComponents() {
-		setTitle("Quản Lý Đầu Sách");
-		setSize(800, 600);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLocationRelativeTo(null);
+private void initComponents() {
+    setTitle("Quản Lý Đầu Sách");
+    setSize(800, 600);
+    setLocationRelativeTo(null);
 
-		JPanel panel = new JPanel(new BorderLayout());
+    JPanel panel = new JPanel(new BorderLayout());
 
-		// Table
-		tableModel = new DefaultTableModel(
-				new String[] { "Mã", "Tựa Sách", "Tóm Tắt", "Số Lượng", "Ngôn Ngữ", "Vị Trí" }, 0);
-		table = new JTable(tableModel);
-		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		table.getSelectionModel().addListSelectionListener(e -> displaySelectedRow());
-		panel.add(new JScrollPane(table), BorderLayout.CENTER);
+    // Table
+    tableModel = new DefaultTableModel(
+            new String[] { "Mã", "Tựa Sách", "Tóm Tắt", "Số Lượng", "Ngôn Ngữ", "Vị Trí" }, 0);
+    table = new JTable(tableModel);
+    table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    table.getSelectionModel().addListSelectionListener(e -> displaySelectedRow());
+    panel.add(new JScrollPane(table), BorderLayout.CENTER);
 
-		// Form input
-		JPanel inputPanel = new JPanel(new GridLayout(7, 2, 10, 10));
-		inputPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+    // Form input
+    JPanel inputPanel = new JPanel(new GridLayout(8, 2, 10, 10));
+    inputPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-		inputPanel.add(new JLabel("Tựa Sách:"));
-		txtTuaSach = new JTextField();
-		inputPanel.add(txtTuaSach);
+    inputPanel.add(new JLabel("Tựa Sách:"));
+    txtTuaSach = new JTextField();
+    inputPanel.add(txtTuaSach);
 
-		inputPanel.add(new JLabel("Tóm Tắt:"));
-		txtTomTat = new JTextArea(3, 20);
-		inputPanel.add(new JScrollPane(txtTomTat));
+    inputPanel.add(new JLabel("Tóm Tắt:"));
+    txtTomTat = new JTextArea(3, 20);
+    inputPanel.add(new JScrollPane(txtTomTat));
 
-		inputPanel.add(new JLabel("Số Lượng:"));
-		txtSoLuong = new JTextField();
-		inputPanel.add(txtSoLuong);
+    inputPanel.add(new JLabel("Số Lượng:"));
+    txtSoLuong = new JTextField();
+    inputPanel.add(txtSoLuong);
 
-		inputPanel.add(new JLabel("Ngôn Ngữ:"));
-		cbNgonNgu = new JComboBox<>();
-		inputPanel.add(cbNgonNgu);
+    inputPanel.add(new JLabel("Ngôn Ngữ:"));
+    cbNgonNgu = new JComboBox<>();
+    inputPanel.add(cbNgonNgu);
 
-		inputPanel.add(new JLabel("Vị Trí:"));
-		cbViTri = new JComboBox<>();
-		inputPanel.add(cbViTri);
+    inputPanel.add(new JLabel("Vị Trí:"));
+    cbViTri = new JComboBox<>();
+    inputPanel.add(cbViTri);
 
-		inputPanel.add(new JLabel("Tác Giả:"));
-		listTacGia = new JList<>();
-		inputPanel.add(new JScrollPane(listTacGia));
+    inputPanel.add(new JLabel("Tác Giả:"));
+    listTacGia = new JList<>();
+    inputPanel.add(new JScrollPane(listTacGia));
 
-		panel.add(inputPanel, BorderLayout.EAST);
+    // Thêm trường tìm kiếm và nút tìm kiếm
+    inputPanel.add(new JLabel("Tìm kiếm:"));
+    txtSearch = new JTextField();
+    inputPanel.add(txtSearch);
 
-		// Buttons
-		JPanel buttonPanel = new JPanel(new FlowLayout());
-		btnAdd = new JButton("Thêm");
-		btnUpdate = new JButton("Cập Nhật");
-		btnDelete = new JButton("Xóa");
-		btnClear = new JButton("Làm Mới");
+    btnSearch = new JButton("Tìm kiếm");
+    inputPanel.add(btnSearch);
 
-		buttonPanel.add(btnAdd);
-		buttonPanel.add(btnUpdate);
-		buttonPanel.add(btnDelete);
-		buttonPanel.add(btnClear);
+    panel.add(inputPanel, BorderLayout.EAST);
 
-		panel.add(buttonPanel, BorderLayout.SOUTH);
+    // Buttons
+    JPanel buttonPanel = new JPanel(new FlowLayout());
+    btnAdd = new JButton("Thêm");
+    btnUpdate = new JButton("Cập Nhật");
+    btnDelete = new JButton("Xóa");
+    btnClear = new JButton("Làm Mới");
 
-		setContentPane(panel);
+    buttonPanel.add(btnAdd);
+    buttonPanel.add(btnUpdate);
+    buttonPanel.add(btnDelete);
+    buttonPanel.add(btnClear);
 
-		// Events
-		btnAdd.addActionListener(e -> addDauSach());
-		btnUpdate.addActionListener(e -> updateDauSach());
-		btnDelete.addActionListener(e -> deleteDauSach());
-		btnClear.addActionListener(e -> clearForm());
-	}
+    panel.add(buttonPanel, BorderLayout.SOUTH);
+
+    setContentPane(panel);
+
+    // Events
+    btnAdd.addActionListener(e -> addDauSach());
+    btnUpdate.addActionListener(e -> updateDauSach());
+    btnDelete.addActionListener(e -> deleteDauSach());
+    btnClear.addActionListener(e -> clearForm());
+    btnSearch.addActionListener(e -> searchDauSach()); // Thêm sự kiện cho nút tìm kiếm
+}
 
 	private void loadData() {
 		try {
@@ -314,8 +324,23 @@ public class DauSachView extends JFrame {
 		listTacGia.clearSelection();
 	}
 
-	private int getNextMatch(String string1) {
-		return 0;
+	private void searchDauSach() {
+	    String keyword = txtSearch.getText().trim();
+	    try {
+	        List<DauSachModel> searchResults = controller.searchDauSachByKeyword(keyword);
+	        tableModel.setRowCount(0); // Clear existing rows
+	        for (DauSachModel ds : searchResults) {
+	            String tenNgonNgu = controller.getTenNgonNgu(ds.getMaNN());
+	            String tenViTri = controller.getTenViTri(ds.getMaVT());
+	            tableModel.addRow(new Object[] { ds.getMaSach(), ds.getTuaSach(), ds.getTomTat(), ds.getSl(),
+	                    tenNgonNgu != null ? tenNgonNgu : "Không xác định",
+	                    tenViTri != null ? tenViTri : "Không xác định" });
+	        }
+	    } catch (Exception e) {
+	        JOptionPane.showMessageDialog(this, "Đã xảy ra lỗi khi tìm kiếm: " + e.getMessage(), "Lỗi",
+	                JOptionPane.ERROR_MESSAGE);
+	    }
 	}
+
 
 }

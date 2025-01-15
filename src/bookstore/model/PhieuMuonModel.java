@@ -9,7 +9,10 @@ public class PhieuMuonModel {
     private Date ngayMuon;
     private Date ngayHetHan;
     private int maSach;
+    private String tuaSach;
+    private String tenDG;
 
+    // Constructor cho các phương thức thông thường
     public PhieuMuonModel(int maMuon, Date ngayMuon, Date ngayHetHan, int maDG, int maSach) {
         this.maMuon = maMuon;
         this.maDG = maDG;
@@ -18,7 +21,17 @@ public class PhieuMuonModel {
         this.maSach = maSach;
     }
 
-    // Getters and Setters
+    // Constructor cho getPhieuMuonByMaDG
+    public PhieuMuonModel(int maMuon, int maSach, String tuaSach, String tenDG, Date ngayMuon, Date ngayHetHan) {
+        this.maMuon = maMuon;
+        this.maSach = maSach;
+        this.tuaSach = tuaSach;
+        this.tenDG = tenDG;
+        this.ngayMuon = ngayMuon;
+        this.ngayHetHan = ngayHetHan;
+    }
+
+    // Getters and setters
     public int getMaMuon() {
         return maMuon;
     }
@@ -58,4 +71,21 @@ public class PhieuMuonModel {
     public void setMaSach(int maSach) {
         this.maSach = maSach;
     }
+
+    public String getTuaSach() {
+        return tuaSach;
+    }
+
+    public void setTuaSach(String tuaSach) {
+        this.tuaSach = tuaSach;
+    }
+
+    public String getTenDG() {
+        return tenDG;
+    }
+
+    public void setTenDG(String tenDG) {
+        this.tenDG = tenDG;
+    }
+
 }

@@ -37,7 +37,7 @@ public class NgonNguView extends JFrame {
 		ngonNguController = new NgonNguController(); // Initialize controller
 
 		setTitle("Quản Lý Ngôn Ngữ");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 800, 600);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
