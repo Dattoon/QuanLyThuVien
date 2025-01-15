@@ -17,21 +17,21 @@ public class TacGiaController {
     }
 
     // Thêm tác giả mới
-    public int addTacGia(String tenTG, String diaChiTG) {
-        TacGiaModel tacGia = new TacGiaModel(0, tenTG, diaChiTG);
-        try {
-            return tacGiaRepository.addTacGia(tacGia);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return 0;
-        }
-    }
+//    public int addTacGia(String tenTG, String diaChiTG) {
+//        TacGiaModel tacGia = new TacGiaModel(0, tenTG, diaChiTG);
+//        try {
+//            return tacGiaRepository.addTacGia(tacGia);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return 0;
+//        }
+//    }
 
     // Cập nhật thông tin tác giả
     public boolean updateTacGia(int maTG, String tenTG, String diaChiTG) {
         TacGiaModel tacGia = new TacGiaModel(maTG, tenTG, diaChiTG);
         try {
-            tacGiaRepository.updateTacGia(tacGia);
+//            tacGiaRepository.updateTacGia(tacGia);
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -43,7 +43,7 @@ public class TacGiaController {
     public boolean deleteTacGia(int maTacGia) {
         try {
             sachTacGiaRepository.deleteSachTacGiaByMaTacGia(maTacGia); // Xóa quan hệ
-            tacGiaRepository.deleteTacGia(maTacGia); // Xóa tác giả
+//            tacGiaRepository.deleteTacGia(maTacGia); // Xóa tác giả
             return true;
         } catch (Exception e) {
             e.printStackTrace();
