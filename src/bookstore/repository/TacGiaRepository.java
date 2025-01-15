@@ -14,7 +14,7 @@ public class TacGiaRepository extends BaseRepository<TacGiaModel> {
     private static final String SELECT_BY_ID_QUERY = "SELECT * FROM TacGia WHERE MaTG = ?";
     private static final String SELECT_BY_DAUSACH_ID_QUERY = 
         "SELECT TG.* FROM TacGia TG " +
-        "JOIN SachTacGia STG ON TG.MaTG = STG.MaTG " +
+        "JOIN sach_tacgia STG ON TG.MaTG = STG.MaTG " +
         "WHERE STG.MaSach = ?";
     private static final String INSERT_TACGIA_QUERY = "INSERT INTO TacGia (TenTG, DiaChiTG) VALUES (?, ?)";
     private static final String UPDATE_TACGIA_QUERY = "UPDATE TacGia SET TenTG = ?, DiaChiTG = ? WHERE MaTG = ?";
