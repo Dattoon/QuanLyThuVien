@@ -81,7 +81,7 @@ public class TraSachView extends JFrame {
         formPanel.add(btnTraSach);
 
         // Bảng hiển thị danh sách sách mượn
-        tableModel = new DefaultTableModel(new Object[]{"Tựa Sách", "Tên Độc Giả", "Ngày Mượn", "Ngày Hết Hạn"}, 0);
+        tableModel = new DefaultTableModel(new Object[]{"Tựa Sách", "Tên Độc Giả", "Ngày Mượn", "Ngày Hết Hạn","Mã Mượn", "Mã sách"}, 0);
         table = new JTable(tableModel);
 
         JScrollPane scrollPane = new JScrollPane(table);
@@ -99,6 +99,8 @@ public class TraSachView extends JFrame {
                 phieuMuon.getTenDG(),
                 phieuMuon.getNgayMuon(),
                 phieuMuon.getNgayHetHan(),
+                phieuMuon.getMaMuon(),
+                phieuMuon.getMaSach(),
             });
         }
     }
